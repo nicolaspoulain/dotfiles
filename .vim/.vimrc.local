@@ -1,0 +1,50 @@
+"% Fichier de conf vimrc complémetaire pour spf13-vim
+"% Nicolas Poulain NPO
+"%
+
+set nospell
+
+" Load a colorscheme
+" See http://vimcolorschemetest.googlecode.com/svn/html/index-html.html
+" colorsr solarized
+ color candy
+" color bluez
+" color candycode
+"color herald
+
+"Set textwrap
+set wrap
+set tw=80
+set fo+=t
+set wm=0
+set linebreak
+noremap :set wrap!
+
+"Show a red square when I should be wrapping
+set cc=+1
+highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
+
+nnoremap <F2> :bnext<CR>      " map F2 to open next buffer
+nnoremap <F3> :bprevious<CR>  " map F3 to open previous buffers
+
+vmap  <expr>  h   DVB_Drag('left')
+vmap  <expr>  l   DVB_Drag('right')
+vmap  <expr>  j   DVB_Drag('down')
+vmap  <expr>  k   DVB_Drag('up')
+vmap  <expr>  D   DVB_Duplicate()
+
+  " Remove any introduced trailing whitespace after moving:
+    let g:DVB_TrimWS = 1
+
+if has("autocmd")
+    " Drupal *.module and *.install files.
+    augroup module
+        autocmd BufRead,BufNewFile *.module set filetype=php
+        autocmd BufRead,BufNewFile *.install set filetype=php
+        autocmd BufRead,BufNewFile *.test set filetype=php
+        autocmd BufRead,BufNewFile *.inc set filetype=php
+        autocmd BufRead,BufNewFile *.profile set filetype=php
+        autocmd BufRead,BufNewFile *.view set filetype=php
+    augroup END
+endif
+syntax on"
