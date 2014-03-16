@@ -1,0 +1,78 @@
+# conky
+#
+# http://crunchbanglinux-fr.org/wiki/crunchbang:conky
+#
+# Enjoy! :)
+##############################################
+# Paramètres
+##############################################
+background yes
+use_xft yes
+xftfont Liberation Sans:size=9
+xftalpha 1
+update_interval 2.0
+total_run_times 0
+own_window yes
+own_window_transparent yes
+own_window_type desktop
+#own_window_argb_visual yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+double_buffer yes
+minimum_size 200 200
+maximum_width 240
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders yes
+default_color 656667
+default_shade_color 000000
+default_outline_color 828282
+alignment top_right
+gap_x 352
+gap_y 56
+no_buffers yes
+uppercase no
+cpu_avg_samples 2
+override_utf8_locale yes
+##############################################
+#  Affichage
+##############################################
+TEXT
+I N F O R M A T I O N S    S Y S T È M E
+${hr}
+Hôte:$alignr$nodename
+Activité:$alignr$uptime
+RAM $alignc $mem / $memmax $alignr $memperc%
+$membar
+swap $alignc $swap / $swapmax $alignr $swapperc%
+${swapbar}
+/ $alignc ${fs_used /} / ${fs_size /} $alignr ${fs_free_perc /}%
+${fs_bar /}
+/home $alignc ${fs_used /home} / ${fs_size /home} $alignr ${fs_free_perc /home}%
+${fs_bar /home}
+
+CPU:$alignr${cpu cpu0}% $processes processes ($running_processes running)
+${cpugraph 50,240 000000 656667}
+${top name 1} $alignr ${top pid 1} ${top cpu 1}
+${top name 2} $alignr ${top pid 2} ${top cpu 2}
+${top name 3} $alignr ${top pid 3} ${top cpu 3}
+${top name 4} $alignr ${top pid 4} ${top cpu 4}
+${top name 5} $alignr ${top pid 5} ${top cpu 5}
+
+R A C C O U R C I S    C L A V I E R
+${hr}
+Alt+F2$alignr Exécuter
+Alt+F3$alignr Menu alternatif
+Super+Space$alignr Menu
+Super+Tab$alignr Menu client
+Super+t$alignr Terminal
+Super+f$alignr Gestionnaire de fichiers
+Super+e$alignr Éditeur de texte
+Super+m$alignr Lecteur multimédia
+Super+w$alignr Navigateur internet
+Super+l$alignr Verrouiller
+Super+v$alignr Contrôle du volume
+Super+x$alignr Quitter
+Alt+a / Alt+u$alignr  Pytyle on/off
+Alt+c$alignr   Cycle des fenêtres
+Alt+l / Alt+h$alignr  Taille fenêtre maîtresse
