@@ -1,0 +1,70 @@
+# conky
+#
+# http://crunchbanglinux-fr.org/wiki/crunchbang:conky
+#
+# Enjoy! :)
+##############################################
+# Paramètres
+##############################################
+background yes
+use_xft yes
+xftfont Liberation Sans:size=9
+xftalpha 1
+update_interval 2.0
+total_run_times 0
+own_window yes
+own_window_transparent yes
+own_window_type desktop
+#own_window_argb_visual yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+double_buffer yes
+minimum_size 150 150
+maximum_width 150
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders yes
+default_color 656667
+default_shade_color 000000
+default_outline_color 828282
+alignment top_right
+gap_x 12
+gap_y 42
+no_buffers yes
+uppercase no
+cpu_avg_samples 2
+override_utf8_locale yes
+##############################################
+#  Affichage
+##############################################
+TEXT
+${time %A %d %B}${font}${color} $alignr${color1}${time %H:%M}${color}
+
+$nodename:$alignr$uptime
+${hr}
+RAM $alignr $mem / $memmax 
+$membar
+#swap $alignr $swap / $swapmax
+#${swapbar}
+/+/home $alignr ${fs_used /} / ${fs_size /}
+${fs_bar /}
+CPU: ${cpu cpu0}% 
+${cpugraph 40,150 000000 656667}
+${top name 1} $alignr ${top pid 1} ${top cpu 1}
+${top name 2} $alignr ${top pid 2} ${top cpu 2}
+${top name 3} $alignr ${top pid 3} ${top cpu 3}
+
+R A C C O U R C I S
+${hr}
+Alt+F2$alignr Exécuter
+Alt+F3$alignr Menu alternatif
+Super+Space$alignr Menu
+Super+Tab$alignr Menu client
+Super+t$alignr Terminal
+Super+f$alignr Gest. de fichiers
+Super+e$alignr Éditeur de texte
+Super+m$alignr Lect. multimédia
+Super+w$alignr Nav. internet
+Super+l$alignr Verrouiller
+Super+v$alignr Contrôle volume
+Super+x$alignr Quitter
