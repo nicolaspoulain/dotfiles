@@ -1,21 +1,205 @@
-" Modeline and Notes 
+" Modeline and Notes {
 " vim: set sw=4 ts=4 sts=4 et tw=78 foldmarker={,} foldlevel=0 foldmethod=marker :
 
 " ======================================================
 "   This is the personal .vimrc file of Nicolas Poulain.
 " ======================================================
 "}
+
+" Bundle setup & Support {
+" 
+" Instalation :
+" git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+" Launch vim with this .vimrc, then :BundleInstall
 "
-" # Use bundles config {
-    if filereadable(expand("~/.vim/.vimrc.bundles"))
-        source ~/.vim/.vimrc.bundles
-    endif
+" The next lines ensure that the ~/.vim/bundle/ system works
+set nocompatible " Must be first line
+filetype off " required!
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+Bundle 'gmarik/vundle'
+" }
+
+" Bundle General {
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'tpope/vim-surround'
+Bundle 'jistr/vim-nerdtree-tabs'
+"Bundle 'bling/vim-bufferline'
+Bundle 'bling/vim-airline'
+"vim-airline doesn't appear until I create a new split
+set laststatus=2
+" Colors in the terminal
+set t_Co=256
+  let g:airline_left_sep = '▶'
+  let g:airline_right_sep = '◀'
+  "let g:airline_symbols.branch = '⎇'
+
+    " # la position du curseur 'ligne,colonne' + Barre de status {
+    "    set ruler
+    "    set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
+    "    if has('statusline')
+    "      set laststatus=2
+    "      " Broken down into easily includeable segments
+    "      set statusline=%w%h%m%r                        " Options
+    "      set statusline+=%{getcwd()}/                   " Current dir
+    "      set statusline+=%<%f\                          " Filename
+    "      set statusline+=[%{&ff}/%Y]                    " Filetype
+    "      set statusline+=\ \ \ %{fugitive#statusline()} " Git Hotness
+    "      set statusline+=%=%-14.(%l,%c%V%)\ %p%%        " file nav info
+    "    endif
+    "}
+" }
+
+" Bundle Programming {
+Bundle 'scrooloose/syntastic'
+Bundle 'tpope/vim-fugitive'
+Bundle 'godlygeek/tabular'
+if executable('ctags')
+    Bundle 'majutsushi/tagbar'
+    let g:tagbar_type_markdown = {
+        \ 'ctagstype' : 'markdown',
+        \ 'kinds' : [
+            \ 'h:headings',
+            \ 'l:links',
+            \ 'i:images'
+        \ ],
+        \ "sort" : 0
+        \ }
+    nmap <F8> :TagbarToggle<CR> 
+endif
+    " PHP {
+    "Bundle 'spf13/PIV'
+    " }
+
+    " Python {
+    Bundle 'python.vim'
+    Bundle 'pythoncomplete'
+    " }
+" }
+
+" Bundle Snippets & AutoComplete {
+Bundle 'Shougo/neocomplcache'
+Bundle 'Shougo/neosnippet'
+Bundle 'honza/vim-snippets'
+    " Snippets {
+        " Use honza's snippets.
+        let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
+
+        " Enable neosnippet snipmate compatibility mode
+        let g:neosnippet#enable_snipmate_compatibility = 1
+
+        " For snippet_complete marker.
+        if !exists("g:spf13_no_conceal")
+            if has('conceal')
+                set conceallevel=2 concealcursor=i
+            endif
+        endif
+
+        " Disable the neosnippet preview candidate window
+        " When enabled, there can be too much visual noise
+        " especially when splits are used.
+        set completeopt-=preview
+    " }
+    " neocomplcache {
+
+        let g:acp_enableAtStartup = 0
+        let g:neocomplcache_enable_at_startup = 1
+        let g:neocomplcache_enable_camel_case_completion = 1
+        let g:neocomplcache_enable_smart_case = 1
+        let g:neocomplcache_enable_underbar_completion = 1
+        let g:neocomplcache_enable_auto_delimiter = 1
+        let g:neocomplcache_max_list = 15
+        let g:neocomplcache_force_overwrite_completefunc = 1
+        let g:neocomplcache_max_menu_width = 30
+
+        " I dont like automatic popup, <C-x><C-u> or <C-n> is better
+         let g:neocomplcache_disable_auto_complete = 1
+
+        " Define dictionary.
+        let g:neocomplcache_dictionary_filetype_lists = {
+                    \ 'default' : '',
+                    \ 'vimshell' : $HOME.'/.vimshell_hist',
+                    \ 'scheme' : $HOME.'/.gosh_completions'
+                    \ }
+
+        " Define keyword.
+        if !exists('g:neocomplcache_keyword_patterns')
+            let g:neocomplcache_keyword_patterns = {}
+        endif
+        let g:neocomplcache_keyword_patterns._ = '\h\w*'
+
+        " Plugin key-mappings {
+            " These two lines conflict with the default digraph mapping of <C-K>
+            imap <C-k> <Plug>(neosnippet_expand_or_jump)
+            smap <C-k> <Plug>(neosnippet_expand_or_jump)
+            if exists('g:spf13_noninvasive_completion')
+                iunmap <CR>
+                " <ESC> takes you out of insert mode
+                inoremap <expr> <Esc>   pumvisible() ? "\<C-y>\<Esc>" : "\<Esc>"
+                " <CR> accepts first, then sends the <CR>
+                inoremap <expr> <CR>    pumvisible() ? "\<C-y>\<CR>" : "\<CR>"
+                " <Down> and <Up> cycle like <Tab> and <S-Tab>
+                inoremap <expr> <Down>  pumvisible() ? "\<C-n>" : "\<Down>"
+                inoremap <expr> <Up>    pumvisible() ? "\<C-p>" : "\<Up>"
+                " Jump up and down the list
+                inoremap <expr> <C-d>   pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<C-d>"
+                inoremap <expr> <C-u>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<C-u>"
+            else
+                imap <silent><expr><C-k> neosnippet#expandable() ?
+                            \ "\<Plug>(neosnippet_expand_or_jump)" : (pumvisible() ?
+                            \ "\<C-e>" : "\<Plug>(neosnippet_expand_or_jump)")
+                smap <TAB> <Right><Plug>(neosnippet_jump_or_expand)
+
+                inoremap <expr><C-g> neocomplcache#undo_completion()
+                inoremap <expr><C-l> neocomplcache#complete_common_string()
+                inoremap <expr><CR> neocomplcache#complete_common_string()
+
+                " <CR>: close popup
+                " <s-CR>: close popup and save indent.
+                inoremap <expr><s-CR> pumvisible() ? neocomplcache#close_popup()"\<CR>" : "\<CR>"
+                inoremap <expr><CR> pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+
+                " <C-h>, <BS>: close popup and delete backword char.
+                inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+                inoremap <expr><C-y> neocomplcache#close_popup()
+            endif
+            " <TAB>: completion.
+            inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+            inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
+        " }
+
+        " Enable omni completion.
+        autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+        autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+        autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+        autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+        autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+        autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+        autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+
+        " Enable heavy omni completion.
+        if !exists('g:neocomplcache_omni_patterns')
+            let g:neocomplcache_omni_patterns = {}
+        endif
+        let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+        let g:neocomplcache_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+        let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+        let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+        let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
+    " }
+" }
+
+" Misc {
+Bundle 'tpope/vim-markdown'
 " }
 
 " # Affiche les numeros de ligne
     set number
 " # Avertissement par flash (visual bell) plutôt que beep
     set vb
+
+" make backspace work like most other apps
+    set backspace=2 
 
 " # Use spaces instead of tabs and be smart
     set expandtab
@@ -38,16 +222,11 @@
     syntax on
     syntax enable
 
-" # Block mode is more useful than Visual mode
-    nnoremap    v   <C-V>
-    nnoremap <C-V>     v
-    vnoremap    v   <C-V>
-    vnoremap <C-V>     v
-
 " # Folding
     set foldenable                  " Auto fold code
 
 " # map F2 and F3 to open next and previous buffer
+    set confirm
     nnoremap <F2> :bnext<CR> 
     nnoremap <F3> :bprevious<CR>
 
@@ -72,9 +251,6 @@
     let mapleader = ","
     let g:mapleader = ","
 
-" # Fast saving
-    nmap <leader>w :w<cr>
-
 " # Search
     set incsearch                   " Find as you type search
     set hlsearch                    " Highlight search terms
@@ -93,11 +269,6 @@
     map j gj
     map k gk
 
-" # Smart way to roatate windows
-    map <C-j> <C-W>J
-    map <C-k> <C-W>K
-    map <C-h> <C-W>H
-    map <C-l> <C-W>L
     set winminheight=0  " Windows is min 0 line high
     set splitright      " Puts new vsplit windows to the right of the current
     set splitbelow      " Puts new split windows to the bottom of the current
@@ -110,170 +281,43 @@
 " # Remember info about open buffers on close
     set viminfo^=%
 
-nmap <F8> :TagbarToggle<CR> 
 
 " # Auto switch to the current file directory when a new buffer is opened
     autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
 
+" Initialize directories {
+function! InitializeDirectories()
+    let parent = $HOME
+    let prefix = 'vim'
+    let dir_list = {
+                \ 'backup': 'backupdir',
+                \ 'views': 'viewdir',
+                \ 'swap': 'directory' }
 
-    " Initialize directories {
-    function! InitializeDirectories()
-        let parent = $HOME
-        let prefix = 'vim'
-        let dir_list = {
-                    \ 'backup': 'backupdir',
-                    \ 'views': 'viewdir',
-                    \ 'swap': 'directory' }
+    if has('persistent_undo')
+        let dir_list['undo'] = 'undodir'
+    endif
 
-        if has('persistent_undo')
-            let dir_list['undo'] = 'undodir'
-        endif
+    let common_dir = parent . '/.' . prefix
 
-        let common_dir = parent . '/.' . prefix
-
-        for [dirname, settingname] in items(dir_list)
-            let directory = common_dir . dirname . '/'
-            if exists("*mkdir")
-                if !isdirectory(directory)
-                    call mkdir(directory)
-                endif
-            endif
+    for [dirname, settingname] in items(dir_list)
+        let directory = common_dir . dirname . '/'
+        if exists("*mkdir")
             if !isdirectory(directory)
-                echo "Warning: Unable to create backup directory: " . directory
-                echo "Try: mkdir -p " . directory
-            else
-                let directory = substitute(directory, " ", "\\\\ ", "g")
-                exec "set " . settingname . "=" . directory
+                call mkdir(directory)
             endif
-        endfor
-    endfunction
-    call InitializeDirectories()
-    " }
-
-" # la position du curseur 'ligne,colonne' + Barre de status {
-    set ruler
-    set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
-    if has('statusline')
-      set laststatus=2
-      " Broken down into easily includeable segments
-      set statusline=%w%h%m%r                        " Options
-      set statusline+=%{getcwd()}/                   " Current dir
-      set statusline+=%<%f\                          " Filename
-      set statusline+=[%{&ff}/%Y]                    " Filetype
-      set statusline+=\ \ \ %{fugitive#statusline()} " Git Hotness
-      set statusline+=%=%-14.(%l,%c%V%)\ %p%%        " file nav info
-    endif
-"}
-
-" Snippets {
-
-    " Use honza's snippets.
-    let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
-
-    " Enable neosnippet snipmate compatibility mode
-    let g:neosnippet#enable_snipmate_compatibility = 1
-
-    " For snippet_complete marker.
-    if !exists("g:spf13_no_conceal")
-        if has('conceal')
-            set conceallevel=2 concealcursor=i
         endif
-    endif
-
-    " Disable the neosnippet preview candidate window
-    " When enabled, there can be too much visual noise
-    " especially when splits are used.
-    set completeopt-=preview
-" neocomplcache {
-
-    let g:acp_enableAtStartup = 0
-    let g:neocomplcache_enable_at_startup = 1
-    let g:neocomplcache_enable_camel_case_completion = 1
-    let g:neocomplcache_enable_smart_case = 1
-    let g:neocomplcache_enable_underbar_completion = 1
-    let g:neocomplcache_enable_auto_delimiter = 1
-    let g:neocomplcache_max_list = 15
-    let g:neocomplcache_force_overwrite_completefunc = 1
-
-    " Define dictionary.
-    let g:neocomplcache_dictionary_filetype_lists = {
-                \ 'default' : '',
-                \ 'vimshell' : $HOME.'/.vimshell_hist',
-                \ 'scheme' : $HOME.'/.gosh_completions'
-                \ }
-
-    " Define keyword.
-    if !exists('g:neocomplcache_keyword_patterns')
-        let g:neocomplcache_keyword_patterns = {}
-    endif
-    let g:neocomplcache_keyword_patterns._ = '\h\w*'
-
-    " Plugin key-mappings {
-        " These two lines conflict with the default digraph mapping of <C-K>
-        imap <C-k> <Plug>(neosnippet_expand_or_jump)
-        smap <C-k> <Plug>(neosnippet_expand_or_jump)
-        if exists('g:spf13_noninvasive_completion')
-            iunmap <CR>
-            " <ESC> takes you out of insert mode
-            inoremap <expr> <Esc>   pumvisible() ? "\<C-y>\<Esc>" : "\<Esc>"
-            " <CR> accepts first, then sends the <CR>
-            inoremap <expr> <CR>    pumvisible() ? "\<C-y>\<CR>" : "\<CR>"
-            " <Down> and <Up> cycle like <Tab> and <S-Tab>
-            inoremap <expr> <Down>  pumvisible() ? "\<C-n>" : "\<Down>"
-            inoremap <expr> <Up>    pumvisible() ? "\<C-p>" : "\<Up>"
-            " Jump up and down the list
-            inoremap <expr> <C-d>   pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<C-d>"
-            inoremap <expr> <C-u>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<C-u>"
+        if !isdirectory(directory)
+            echo "Warning: Unable to create backup directory: " . directory
+            echo "Try: mkdir -p " . directory
         else
-            imap <silent><expr><C-k> neosnippet#expandable() ?
-                        \ "\<Plug>(neosnippet_expand_or_jump)" : (pumvisible() ?
-                        \ "\<C-e>" : "\<Plug>(neosnippet_expand_or_jump)")
-            smap <TAB> <Right><Plug>(neosnippet_jump_or_expand)
-
-            inoremap <expr><C-g> neocomplcache#undo_completion()
-            inoremap <expr><C-l> neocomplcache#complete_common_string()
-            inoremap <expr><CR> neocomplcache#complete_common_string()
-
-            " <CR>: close popup
-            " <s-CR>: close popup and save indent.
-            inoremap <expr><s-CR> pumvisible() ? neocomplcache#close_popup()"\<CR>" : "\<CR>"
-            inoremap <expr><CR> pumvisible() ? neocomplcache#close_popup() : "\<CR>"
-
-            " <C-h>, <BS>: close popup and delete backword char.
-            inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-            inoremap <expr><C-y> neocomplcache#close_popup()
+            let directory = substitute(directory, " ", "\\\\ ", "g")
+            exec "set " . settingname . "=" . directory
         endif
-        " <TAB>: completion.
-        inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-        inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
-    " }
-
-    " Enable omni completion.
-    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-    autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-    autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-
-    " Enable heavy omni completion.
-    if !exists('g:neocomplcache_omni_patterns')
-        let g:neocomplcache_omni_patterns = {}
-    endif
-    let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-    let g:neocomplcache_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-    let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-    let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-    let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
-" }
-"A mapping to make a backup of the current file.
-function! WriteBackup()
-  let l:fname = expand('%:p') . '__' . strftime('%Y_%m_%d_%H.%M.%S_%N')
-  silent execute 'write' l:fname
-  echomsg 'Wrote' l:fname
+    endfor
 endfunction
-nnoremap <Leader>ba :<C-U>call WriteBackup()<CR>
-vnoremap <Leader>ba :<C-U>call WriteBackup()<CR>
+call InitializeDirectories()
+" }
 
 cnoremap sudow w !sudo tee % >/dev/null
+
