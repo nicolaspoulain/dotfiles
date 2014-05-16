@@ -19,7 +19,7 @@ own_window_type desktop
 own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
 double_buffer yes
 minimum_size 150 150
-maximum_width 150
+maximum_width 1500
 draw_shades no
 draw_outline no
 draw_borders no
