@@ -28,7 +28,8 @@ default_color 656667
 default_shade_color 000000
 default_outline_color 828282
 alignment top_right
-gap_x 352
+gap_x 12
+#gap_x 352
 gap_y 56
 no_buffers yes
 uppercase no
@@ -38,8 +39,8 @@ override_utf8_locale yes
 #  Affichage
 ##############################################
 TEXT
-${color}${font pixelsize=12}${time %A %d %B %Y}
-${color1}${font URW Chancery L:style=Medium Italic:pixelsize=34}${time %H:%M:%S}${font}${color}
+${color1}${font pixelsize=12}${time %A %d %B %Y}
+${color1}${font URW Chancery L:style=Medium Italic:pixelsize=34}${time %H:%M:%S}${font}${color1}
 
 I N F O R M A T I O N S    S Y S T È M E
 ${hr}
@@ -79,3 +80,5 @@ Super+x$alignr Quitter
 Alt+a / Alt+u$alignr  Pytyle on/off
 Alt+c$alignr   Cycle des fenêtres
 Alt+l / Alt+h$alignr  Taille fenêtre maîtresse
+
+${exec cat /home/nico/houdon.txt}
