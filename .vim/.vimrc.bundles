@@ -62,6 +62,7 @@ if !exists("g:override_spf13_bundles")
 
   " General {
   if count(g:spf13_bundle_groups, 'general')
+    "Bundle 'igrigorik/vimgolf'
     "Bundle 'scrooloose/nerdtree'
     "Bundle 'altercation/vim-colors-solarized'
     "Bundle 'spf13/vim-colors'
@@ -92,7 +93,7 @@ if !exists("g:override_spf13_bundles")
     "Bundle 'tpope/vim-abolish.git'
     "Bundle 'osyo-manga/vim-over'
     "Bundle 'justinmk/vim-sneak'
-  endif
+endif
   " }
 
   " General Programming {

@@ -81,4 +81,3 @@ Alt+a / Alt+u$alignr  Pytyle on/off
 Alt+c$alignr   Cycle des fenêtres
 Alt+l / Alt+h$alignr  Taille fenêtre maîtresse
 
-${exec cat /home/nico/houdon.txt}
