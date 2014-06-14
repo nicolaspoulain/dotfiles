@@ -1,0 +1,65 @@
+                           | INDENTATION, AUTOINDENTATION
+ ------------------------- | ---------------------------------------------
+ >> , <<                   | Shift right, shift left
+ gg=G                      | Si marche pas, set ft=html  + set si [^6]
+ == , =                    | AutoIndent current line, current block
+ :Tabularize /x            | Aligns statements on char x: (*TABULARIZE*)
+ Vu , VU , gggUG           | Lowercase line, uppercase line, entire file
+ gq                        | Formate la sélection
+
+                           | SELECTION DE BLOC TEXTE
+ ------------------------- | ---------------------------------------------
+ v , <C-v> , V , gv        | Selection texte/ colonne/ ligne /précédent
+ h j k l' , D              | *DRAGVISUAL*:    déplace bloc, duplique
+ :%s/\%Vold/new/g          | Do a substitute on last visual area
+
+                           | INSERTION SUR PLUSIEURS LIGNES
+ ------------------------- | ---------------------------------------------
+ <C-v> jj $ A foo Esc      | Insertion à la fin des lignes d'un bloc
+ <C-v> jj I foo Esc        | Insertion dans une colonne d'un bloc
+
+                           | REGISTRES
+ ------------------------- | ---------------------------------------------
+ "5yy  , "hyy              | Copie la ligne dans le registre 5 (ou h)
+ :reg                      | Liste les registres
+ "5p , "hp , i<C-r>h       | Colle le contenu du regsitre 5 (ou h)
+ "_dd                      | Delete to BlackHole don't affect any register
+
+                           | FOLDING COMMANDS [^1]
+ ------------------------- | ---------------------------------------------
+ za                        | Toggle state of one fold ( zA  recurs [^2])
+ zR                        | Opens ALL folds ( zr  decr foldlevel by 1)
+ zM                        | Closes ALL folds ( zM  incr foldlevel by 1)
+ zf%                       | Creates fold from a delimitor to its brother
+ Vjj zf                    | Creates fold from visual block
+ zj , zk                   | Move to the next, previous fold
+ [z , ]z                   | Move to start/ end of open fold
+
+                           | RECORDING
+ ------------------------- | ---------------------------------------------
+ qa  ,..., qz              | Démarre enregistrement action (registre a...z)
+ q                         | Stopppe enregistrement action [^8]
+ @a  @z                    | Joue  l'enregistrement action (registre a...z)
+ 6@a                       | Joue 6x enregistrement action
+ @@ , 6@@                  | Rejoue le dernier enregistrement , 6 fois
+ "ap  <C-R>a               | Affiche enregistrement normal/insert mode
+ "add                      | Réenregistre action dans le registre a
+
+                           | DIVERS
+ ------------------------- | ---------------------------------------------
+ .                         | Repeat last modification
+ @:                        | Repeat last : command (then @@)
+ :history                  | List of all your commands
+ <C-X><C-L>                | Line complete SUPER USEFUL
+ /<C-R><C-W>               | Pull <cword> onto search/command line
+ ga , g8                   | Display hex value of char under cursor
+ :digraphs  ga             | Display table of utf8 chars
+ i<C-v>233                 | Insert é
+ <C-a> , 9<C-x>            | Increment,decrement first number after cursor
+ :set paste , :set nopaste | Avant/après  de coller depuis le navigateur
+ :sort [n]                 | Trier sur première colonne [numéric]
+ :%!sort -t';' -k3 [-n]    | Sort column 3 of coma separated [numeric]
+ <leader>gs                | *FUGITIVE* :Gstatus - un/stage, cc commt msg
+ :TagbarToggle             | *TAGBAR* (maped to F8)
+
+

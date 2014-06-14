@@ -1,0 +1,43 @@
+# conky
+#
+# http://crunchbanglinux-fr.org/wiki/crunchbang:conky
+#
+# Enjoy! :)
+##############################################
+# Paramètres
+##############################################
+background yes
+use_xft yes
+#xftfont Liberation Sans:size=9
+xftfont monospace:size=10
+xftalpha 1
+update_interval 2.0
+total_run_times 0
+own_window yes
+own_window_transparent yes
+own_window_type desktop
+#own_window_argb_visual yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+double_buffer yes
+minimum_size 150 150
+maximum_width 680
+#text_buffer_size 1024
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders yes
+default_color b5b6b7
+default_shade_color 000000
+default_outline_color 828282
+alignment top_right
+gap_x 1300
+gap_y 30
+no_buffers yes
+uppercase no
+cpu_avg_samples 2
+override_utf8_locale yes
+##############################################
+#  Affichage
+##############################################
+TEXT
+${exec cat /home/nico/Dropbox/dotfiles/.conky01.txt}
