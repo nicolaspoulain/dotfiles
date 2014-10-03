@@ -17,22 +17,52 @@ set nocompatible " Must be first line
 filetype off " required!
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
+
+" Twig files are treated like html files
+autocmd BufNewFile,BufRead *.html.twig set filetype=html
+
+" Reload Chromium browser on save web files
+autocmd BufWriteCmd *.html,*.css,*.haml,*.php,*.twig :call Refresh_browser()
+    function! Refresh_browser()
+        if &modified
+            write
+            silent ! ~/Dropbox/dotfiles/.vimBrowserRefresh.sh 
+        endif
+    endfunction
+
 Bundle 'gmarik/vundle'
 " }
 
-" Bundle General {
-Bundle 'Lokaltog/vim-easymotion'
+Bundle 'kien/ctrlp.vim' 
+"{
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+" r - the nearest ancestor that contains a .git directory
+" a - the directory of the current file, but only if the current working directory outside of CtrlP is
+"     not a direct ancestor of the directory of the current file.
+let g:ctrlp_working_path_mode = 'ra'
+"}
+Bundle 'Lokaltog/vim-easymotion' 
+"{
+"}
 Bundle 'tpope/vim-surround'
-Bundle 'jistr/vim-nerdtree-tabs'
-"Bundle 'bling/vim-bufferline'
+"{
+"}
+Bundle 'scrooloose/nerdtree'
+"{
+"Bundle 'jistr/vim-nerdtree-tabs'
+    nmap <F7> :NERDTreeToggle<CR> 
+"}
 Bundle 'bling/vim-airline'
-"vim-airline doesn't appear until I create a new split
-set laststatus=2
-" Colors in the terminal
-set t_Co=256
-  let g:airline_left_sep = '▶'
-  let g:airline_right_sep = '◀'
-  "let g:airline_symbols.branch = '⎇'
+"{
+    "Bundle 'bling/vim-bufferline'
+    "vim-airline doesn't appear until I create a new split
+    set laststatus=2
+    " Colors in the terminal
+    set t_Co=256
+    let g:airline_left_sep = '▶'
+    let g:airline_right_sep = '◀'
+    "let g:airline_symbols.branch = '⎇'
 
     " # la position du curseur 'ligne,colonne' + Barre de status {
     "    set ruler
@@ -54,6 +84,7 @@ set t_Co=256
 Bundle 'scrooloose/syntastic'
 Bundle 'tpope/vim-fugitive'
 Bundle 'godlygeek/tabular'
+Bundle 'evidens/vim-twig'
 if executable('ctags')
     Bundle 'majutsushi/tagbar'
     let g:tagbar_type_markdown = {
@@ -67,9 +98,9 @@ if executable('ctags')
         \ }
     nmap <F8> :TagbarToggle<CR> 
 endif
-    " PHP {
-    "Bundle 'spf13/PIV'
-    " }
+" PHP {
+Bundle 'spf13/PIV'
+" }
 
     " Python {
     Bundle 'python.vim'
@@ -113,7 +144,7 @@ Bundle 'honza/vim-snippets'
         let g:neocomplcache_max_menu_width = 30
 
         " I dont like automatic popup, <C-x><C-u> or <C-n> is better
-         let g:neocomplcache_disable_auto_complete = 1
+        " let g:neocomplcache_disable_auto_complete = 1
 
         " Define dictionary.
         let g:neocomplcache_dictionary_filetype_lists = {
@@ -167,10 +198,9 @@ Bundle 'honza/vim-snippets'
             inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
             inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
         " }
-
         " Enable omni completion.
         autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-        autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+        autocmd FileType html,markdown,twig setlocal omnifunc=htmlcomplete#CompleteTags
         autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
         autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
         autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
