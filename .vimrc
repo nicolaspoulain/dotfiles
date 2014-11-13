@@ -21,14 +21,14 @@
 " Bundles and their configuration {
 
 " Vim motions on speed!
-Bundle 'Lokaltog/vim-easymotion' 
+Bundle 'Lokaltog/vim-easymotion'
 
 Bundle 'tpope/vim-markdown'
 
 " deleting, changing, and adding surroundings
 Bundle 'tpope/vim-surround'
 
-" Syntax checking on the fly has never been so pimp 
+" Syntax checking on the fly has never been so pimp
 Bundle 'scrooloose/syntastic'
 
 " A Git wrapper so awesome, it should be illegal
@@ -45,11 +45,11 @@ Bundle 'pythoncomplete'
 " A tree explorer plugin that owns your momma!
 Bundle 'scrooloose/nerdtree'
 "{
-    nmap <F7> :NERDTreeToggle<CR> 
+    nmap <F7> :NERDTreeToggle<CR>
 "}
 
 " Fuzzy file, buffer, mru, tag, ... finder
-Bundle 'kien/ctrlp.vim' 
+Bundle 'kien/ctrlp.vim'
 "{
     let g:ctrlp_map = '<c-p>'
     let g:ctrlp_cmd = 'CtrlP'
@@ -84,11 +84,11 @@ if executable('ctags')
         \ ],
         \ "sort" : 0
         \ }
-    nmap <F8> :TagbarToggle<CR> 
+    nmap <F8> :TagbarToggle<CR>
 endif
 "}
 
-" Bundle Snippets & AutoComplete 
+" Bundle Snippets & AutoComplete
 Bundle 'Shougo/neocomplcache'
     " {
     let g:acp_enableAtStartup = 0
@@ -173,95 +173,95 @@ Bundle 'ervandew/supertab'
 
 "}
 
-" display line numbers
-    set number
-" Colors in the terminal
-    set t_Co=256
+set number          " display line numbers
+set numberwidth=5   " nuw: width of number column
+set t_Co=256        " Colors in the terminal
+set showcmd         " display incomplete commands
+set nowrap          " Lines longer than window width will ot break
+set scrolloff=4     " keep 4 lines between current line and screen edge
+set sidescrolloff=2 " keep 2 cols between the current col screen edge
+let mapleader=','   " change map leader from \ to ,
+set list            " list listchars
+set lcs=tab:»·
+set lcs+=trail:·
+
+" Moving around long lines made easy if wrap is on
+map j gj
+map k gk
+
+
 
 " tabs and shift {
-" tabs expanded to 2 spaces
-    set tabstop=2
-" shift text 2 spaces right or left
-    set shiftwidth=2
-"	autoindent should on when using 'smartindent'.
-    set smartindent
-    set autoindent
-" pastetoggle (sane indentation on pastes)
-    set pastetoggle=<F12>  
-"}
+set tabstop=2         " number of spaces that a tab renders as
+set shiftwidth=2      " number of spaces to use for autoindent
+set softtabstop=2     " number of spaces that tabs insert
+set smarttab          " helps with backspacing because of expandtab
+set expandtab         " uses spaces instead of tab characters
+set smartindent       " indent is automatically and smartly inserted
+set autoindent        " autoindent should be on when using 'smartindent'.
+set pastetoggle=<F12> " pastetoggle (sane indentation on pastes)
+" }
 
-" enable file type detection
-		filetype on
-" enable loading the plugin files for specific file types
-		filetype plugin on
-" enable loading the indent file for specific file types
-		filetype indent on
+filetype on              " enable file type detection
+filetype plugin on       " load the plugin files for specific file types
+filetype indent on       " load the indent file for specific file types
+let g:tex_flavor='latex' " Prevent vim from setting filetype to `plaintex`
+syntax enable            " active la coloration syntaxique
 
-" Prevent vim from setting filetype to `plaintex`
-		let g:tex_flavor='latex'
+" folding {
+set foldmethod=syntax " fdm: fold by the indentation by default
+set foldnestmax=10    " fdn: deepest fold is 10 levels
+set nofoldenable      " nofen: don't fold by default
+set foldlevel=1
+" }
 
-" active la coloration syntaxique
-    syntax enable
+" color the 81st column of wide lines
+highlight ColorColumn ctermbg=magenta
+call matchadd('ColorColumn', '\%81v', 100)
 
-" auto fold code
-    set foldenable                  
-
-" color the 81st column of wide lines 
-    highlight ColorColumn ctermbg=magenta
-    call matchadd('ColorColumn', '\%81v', 100)
-
-" keep 5 lines up and below the cursor
-    set so=5
-
-" Puts new vsplit windows to the right of the current   
-		set splitright      
-" Puts new split windows to the bottom of the current   
-		set splitbelow      
+set splitright " Puts new vsplit windows to the right of the current
+set splitbelow " Puts new split windows to the bottom of the current
 " map F2 and F3 to switch to next and previous buffer
-    nnoremap <F2> :bnext<CR> 
-    nnoremap <F3> :bprevious<CR>
-
-" Moving around long lines made easy
-    map j gj
-    map k gk
-
-" change map leader from "\" to ","
-    let mapleader=","
+nnoremap <F2> :bnext<CR>
+nnoremap <F3> :bprevious<CR>
 
 " Search {
-" incremental searching : search as you type
-    set incsearch
-" Highlight search matches
-    set hlsearch
-" Ignore case in search patterns
-    set ignorecase
-" Case sensitive if the search pattern contains upper case characters.
-    set smartcase
+set incsearch  " incremental searching : search as you type
+set hlsearch   " Highlight search matches
+set ignorecase " Ignore case in search patterns
+set smartcase  " Case sensitive if pattern contains upper case characters
 " Disable highlight when <leader><cr> is pressed
-    map <silent> <leader><cr> :noh<cr>
+map <silent> <leader><cr> :noh<cr>
 "}
 
-" show matching brackets over text indicator "(:),{:},[:]"
-    set showmatch
-" add "<:>" as a matching pair
-    set matchpairs+=<:>             
+set showmatch       " show matching brackets "(:),{:},[:]"
+set matchpairs+=<:> " add "<:>" as a matching pair
 
 
-" Turn on the Wild menu for completion on opening files
-    set wildmenu
-" Command <Tab> completion, list matches, then longest common part, then all.
-    set wildmode=list:longest,full  
+set wildmenu            " Turn on the Wild menu for completion on opening files
+set wildignore+=*.~     "wig: ignore compiled objects and backups
+set wig+=*.o,*.obj,*.pyc
+set wig+=.sass-cache,tmp
+" <Tab> completion, list matches, then longest common part, then all.
+set wildmode=list:longest,full
+
+
 
 " Sets how many lines of history VIM has to remember
-    set history=1000
-	" make a backup before overwriting a file
-	 set backup 
-  " undo
-	 if has('persistent_undo')
-			" save/restore undo history to/from an undo file : 
-			" see InitializeDirectories() function
+    set history=100
+    " make a backup before overwriting a file
+    set backup
+
+set nobackup "nobk: in this age of version control, who needs it
+set nowritebackup "nowb: don't make a backup before overwriting
+set noswapfile "noswf: don't litter swap files everywhere
+    
+    " undo
+    if has('persistent_undo')
+        " save/restore undo history to/from an undo file :
+        " see InitializeDirectories() function
         set undofile
-			" maximum number of changes that can be undone
+    " maximum number of changes that can be undone
         set undolevels=1000
     endif
 
@@ -275,8 +275,8 @@ Bundle 'ervandew/supertab'
 function! InitializeDirectories()
     let parent = $HOME
     let prefix = 'Dropbox/dotfiles/.vim'
-" with  prefix = 'my/dir/prefix_ this will create 
-"  ~/my/dir/prefix_backup,     ~/my/dir/prefix_views 
+" with  prefix = 'my/dir/prefix_ this will create
+"  ~/my/dir/prefix_backup,     ~/my/dir/prefix_views
 "  ~/my/dir/prefix_swap   and  ~/my/dir/prefix_undo
     let dir_list = {
                 \ 'backup': 'backupdir',
