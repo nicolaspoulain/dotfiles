@@ -23,13 +23,18 @@
 " Vim motions on speed!
 Bundle 'Lokaltog/vim-easymotion'
 
-Bundle 'tpope/vim-markdown'
-
 " deleting, changing, and adding surroundings
 Bundle 'tpope/vim-surround'
 
 " Syntax checking on the fly has never been so pimp
 Bundle 'scrooloose/syntastic'
+"{
+let g:syntastic_error_symbol = '✗'
+let g:syntastic_warning_symbol = '⚠'
+let g:syntastic_full_redraws = 1
+let g:syntastic_auto_jump = 2         " Jump to syntax errors
+let g:syntastic_auto_loc_list = 1     " Auto-open the error list
+"}
 
 " A Git wrapper so awesome, it should be illegal
 Bundle 'tpope/vim-fugitive'
@@ -181,14 +186,14 @@ set nowrap          " Lines longer than window width will ot break
 set scrolloff=4     " keep 4 lines between current line and screen edge
 set sidescrolloff=2 " keep 2 cols between the current col screen edge
 let mapleader=','   " change map leader from \ to ,
-set list            " list listchars
-set lcs=tab:»·
-set lcs+=trail:·
+set list " Show invisible characters
+let &listchars = "tab:>-,trail:\u2591,extends:>,precedes:<,nbsp:\u00b7"
 
+set nowrap          " don't wrap lines (we map leader-W to toggle)
+nmap <leader>W :set invwrap<CR>:set wrap?<CR>
 " Moving around long lines made easy if wrap is on
 map j gj
 map k gk
-
 
 
 " tabs and shift {
@@ -221,9 +226,26 @@ call matchadd('ColorColumn', '\%81v', 100)
 
 set splitright " Puts new vsplit windows to the right of the current
 set splitbelow " Puts new split windows to the bottom of the current
+" Key repeat hack for resizing splits, i.e., <C-w>+++- vs <C-w>+<C-w>+<C-w>-
+" see: http://www.vim.org/scripts/script.php?script_id=2223
+nmap <C-w>+ <C-w>+<SID>ws
+nmap <C-w>- <C-w>-<SID>ws
+nmap <C-w>> <C-w>><SID>ws
+nmap <C-w>< <C-w><<SID>ws
+nnoremap <script> <SID>ws+ <C-w>+<SID>ws
+nnoremap <script> <SID>ws- <C-w>-<SID>ws
+nnoremap <script> <SID>ws> <C-w>><SID>ws
+nnoremap <script> <SID>ws< <C-w><<SID>ws
+nmap <SID>ws <Nop>
+
 " map F2 and F3 to switch to next and previous buffer
 nnoremap <F2> :bnext<CR>
 nnoremap <F3> :bprevious<CR>
+
+
+" Allow writing via sudo
+cnoremap w!! w !sudo tee > /dev/null %
+
 
 " Search {
 set incsearch  " incremental searching : search as you type
@@ -232,7 +254,24 @@ set ignorecase " Ignore case in search patterns
 set smartcase  " Case sensitive if pattern contains upper case characters
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
+" Highlight matches when jumping to next
+function! HLNext (blinktime)
+  highlight WhiteOnRed ctermfg=white ctermbg=red
+  let [bufnum, lnum, col, off] = getpos('.')
+  let matchlen = strlen(matchstr(strpart(getline('.'),col-1),@/))
+  let target_pat = '\c\%#'.@/
+  let ring = matchadd('WhiteOnRed', target_pat, 101)
+  redraw
+  exec 'sleep ' . a:blinktime . 'm'
+  call matchdelete(ring)
+  redraw
+endfunction
+" Now, remap n/N so they call themselves, center screen & call HLNext
+nnoremap <silent> n nzz:call HLNext(300)<cr>
+nnoremap <silent> N Nzz:call HLNext(300)<cr>
 "}
+
+
 
 set showmatch       " show matching brackets "(:),{:},[:]"
 set matchpairs+=<:> " add "<:>" as a matching pair
@@ -255,7 +294,7 @@ set wildmode=list:longest,full
 set nobackup "nobk: in this age of version control, who needs it
 set nowritebackup "nowb: don't make a backup before overwriting
 set noswapfile "noswf: don't litter swap files everywhere
-    
+
     " undo
     if has('persistent_undo')
         " save/restore undo history to/from an undo file :
