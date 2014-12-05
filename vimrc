@@ -20,6 +20,22 @@
 
 " Bundles and their configuration {
 
+" Highlight the line of the cursor
+Bundle 'miyakogi/conoline.vim'
+" Highlight the column of the cursor with F10
+fu! ToggleCurcol ()
+  if &cursorcolumn
+    set nocursorcolumn
+  else
+    set cursorcolumn
+  endif
+endfunction
+map <F10> :call ToggleCurcol()<CR>
+
+
+Bundle 'tpope/vim-markdown'
+Bundle 'wikimatze/tocdown'
+
 " Vim motions on speed!
 Bundle 'Lokaltog/vim-easymotion'
 
@@ -212,6 +228,10 @@ filetype plugin on       " load the plugin files for specific file types
 filetype indent on       " load the indent file for specific file types
 let g:tex_flavor='latex' " Prevent vim from setting filetype to `plaintex`
 syntax enable            " active la coloration syntaxique
+" twig is treated as html
+autocmd BufNewFile,BufRead *.html.twig   set syntax=html
+
+
 
 " folding {
 set foldmethod=syntax " fdm: fold by the indentation by default
@@ -255,23 +275,30 @@ set smartcase  " Case sensitive if pattern contains upper case characters
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
 " Highlight matches when jumping to next
+"function! HLNext (blinktime)
+"  redraw
+"endfunction
+
+" blink the line containing the match then highlight the match in red
 function! HLNext (blinktime)
-  highlight WhiteOnRed ctermfg=white ctermbg=red
-  let [bufnum, lnum, col, off] = getpos('.')
-  let matchlen = strlen(matchstr(strpart(getline('.'),col-1),@/))
-  let target_pat = '\c\%#'.@/
-  let ring = matchadd('WhiteOnRed', target_pat, 101)
-  redraw
-  exec 'sleep ' . a:blinktime . 'm'
-  call matchdelete(ring)
-  redraw
+    set invcursorline
+    redraw
+    exec 'sleep ' . float2nr(a:blinktime) . 'm'
+    highlight WhiteOnRed ctermfg=white ctermbg=red
+    let [bufnum, lnum, col, off] = getpos('.')
+    let matchlen = strlen(matchstr(strpart(getline('.'),col-1),@/))
+    let target_pat = '\c\%#'.@/
+    let ring = matchadd('WhiteOnRed', target_pat, 101)
+    redraw
+    exec 'sleep ' . a:blinktime . 'm'
+    call matchdelete(ring)
+    set invcursorline
+    redraw
 endfunction
 " Now, remap n/N so they call themselves, center screen & call HLNext
 nnoremap <silent> n nzz:call HLNext(300)<cr>
 nnoremap <silent> N Nzz:call HLNext(300)<cr>
 "}
-
-
 
 set showmatch       " show matching brackets "(:),{:},[:]"
 set matchpairs+=<:> " add "<:>" as a matching pair
@@ -286,14 +313,10 @@ set wildmode=list:longest,full
 
 
 
-" Sets how many lines of history VIM has to remember
-    set history=100
-    " make a backup before overwriting a file
-    set backup
-
-set nobackup "nobk: in this age of version control, who needs it
-set nowritebackup "nowb: don't make a backup before overwriting
-set noswapfile "noswf: don't litter swap files everywhere
+set history=100   " how many lines of history VIM has to remember
+set nobackup      " in this age of version control, who needs it
+set nowritebackup " don't make a backup before overwriting
+set noswapfile    " don't litter swap files everywhere
 
     " undo
     if has('persistent_undo')
@@ -313,7 +336,7 @@ set noswapfile "noswf: don't litter swap files everywhere
 " Setting up the directories {
 function! InitializeDirectories()
     let parent = $HOME
-    let prefix = 'Dropbox/dotfiles/.vim'
+    let prefix = '.vim'
 " with  prefix = 'my/dir/prefix_ this will create
 "  ~/my/dir/prefix_backup,     ~/my/dir/prefix_views
 "  ~/my/dir/prefix_swap   and  ~/my/dir/prefix_undo
