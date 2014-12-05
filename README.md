@@ -7,10 +7,10 @@ vim
 
 
 ```bash
-$ cd somewhere
+$ cd pathTo/dotfiles/
 $ git clone https://github.com/nicolaspoulain/dotfiles.git
-$ ln -s pathTo/dotfiles/.vim ~/.vim
-$ ln -s pathTo/dotfiles/.vimrc ~/.vimrc
+$ ln -s pathTo/dotfiles/vimrc ~/.vimrc
+$ mkdir ~/.vim
 $ git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 ```
 open vim then :BundleInstall
