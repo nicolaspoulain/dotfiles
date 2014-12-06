@@ -9,6 +9,14 @@
 " Launch vim with this .vimrc, then :BundleInstall
 " ======================================================
 
+
+" Config per hostname
+let hostname = substitute(system('hostname'), '\n', '', '')
+if hostname == "msi"
+  colorscheme elflord
+endif
+
+
 " Bundle setup & Support {
 " The next lines ensure that the ~/.vim/bundle/ system works
     set nocompatible " Must be first line
