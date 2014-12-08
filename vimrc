@@ -9,6 +9,21 @@
 " Launch vim with this .vimrc, then :BundleInstall
 " ======================================================
 
+
+" Config per hostname
+let hostname = substitute(system('hostname'), '\n', '', '')
+if hostname == "msi"
+  colorscheme elflord
+elseif hostname == "daforbb"
+  colorscheme elflord
+  let g:conoline_color_normal_dark = "guibg=black guifg=white gui=bold "
+                           \. "ctermbg=black ctermfg=yellow"
+  let g:conoline_color_insert_dark = "guibg=black guifg=white gui=bold "
+                           \. "ctermbg=black ctermfg=white"
+endif
+
+
+
 " Bundle setup & Support {
 " The next lines ensure that the ~/.vim/bundle/ system works
     set nocompatible " Must be first line
