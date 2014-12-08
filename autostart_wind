@@ -72,7 +72,7 @@ cb-cowpowers &
 
 ## cb-welcome - post-installation script, will not run in a live session and
 ## only runs once. Safe to remove.
-(sleep 10s && cb-welcome --firstrun) &
+#(sleep 10s && cb-welcome --firstrun) &
 
 ## cb-fortune - have Waldorf say a little adage
 #(sleep 120s && cb-fortune) &
@@ -80,7 +80,7 @@ cb-cowpowers &
 ## Run the conky
 conky -q &
 #sleep 20 && conky -d -c /home/Dropbox/dotfiles/conkyrc &
-sleep 5 && conky -d -c /home/nico/Dropbox/dotfiles/.conkyrc01_wind &
-sleep 5 && conky -d -c /home/nico/Dropbox/dotfiles/.conkyrc02_wind &
+#sleep 5 && conky -d -c /home/nico/Dropbox/dotfiles/.conkyrc01_wind &
+#sleep 5 && conky -d -c /home/nico/Dropbox/dotfiles/.conkyrc02_wind &
 
 /home/nico/.dropbox-dist/dorpboxd &
