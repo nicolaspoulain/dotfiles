@@ -1,5 +1,5 @@
 " Modeline and Notes {
-" vim: set sw=4 ts=4 sts=4 et tw=78 foldmarker={,} foldlevel=0 foldmethod=marker :
+" vim:tw=78 foldmarker={,} foldlevel=0 foldmethod=marker :
 " }
 " ======================================================
 "   This is the personal .vimrc file of Nicolas Poulain.
@@ -21,8 +21,6 @@ elseif hostname == "daforbb"
   let g:conoline_color_insert_dark = "guibg=black guifg=white gui=bold "
                            \. "ctermbg=black ctermfg=white"
 endif
-
-
 
 " Bundle setup & Support {
 " The next lines ensure that the ~/.vim/bundle/ system works
@@ -107,7 +105,6 @@ Bundle 'bling/vim-airline'
 " }
 
 " Display tags of a file ordered by scope
-"    Bundle 'majutsushi/tagbar'
 "{
 if executable('ctags')
     Bundle 'majutsushi/tagbar'
@@ -201,11 +198,12 @@ Bundle 'honza/vim-snippets'
     " especially when splits are used.
     set completeopt-=preview
   " }
-Bundle 'ervandew/supertab'
-  " {
-  let g:SuperTabDefaultCompletionType = "context"
-  let g:SuperTabContextDefaultCompletionType = "<c-x><c-u>"
-  " }
+
+"Bundle 'ervandew/supertab'
+"  " {
+"  let g:SuperTabDefaultCompletionType = "context"
+"  let g:SuperTabContextDefaultCompletionType = "<c-x><c-u>"
+"  " }
 
 "}
 
