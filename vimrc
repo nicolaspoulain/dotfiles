@@ -20,6 +20,12 @@ elseif hostname == "daforbb"
                            \. "ctermbg=black ctermfg=yellow"
   let g:conoline_color_insert_dark = "guibg=black guifg=white gui=bold "
                            \. "ctermbg=black ctermfg=white"
+elseif hostname == "waldorf"
+  colorscheme elflord
+  let g:conoline_color_normal_dark = "guibg=black guifg=white gui=bold "
+                           \. "ctermbg=black ctermfg=yellow"
+  let g:conoline_color_insert_dark = "guibg=black guifg=white gui=bold "
+                           \. "ctermbg=black ctermfg=white"
 endif
 
 " Bundle setup & Support {
