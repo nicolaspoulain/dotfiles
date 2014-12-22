@@ -9,11 +9,21 @@
 " Launch vim with this .vimrc, then :BundleInstall
 " ======================================================
 
+" Bundle setup & Support {
+" The next lines ensure that the ~/.vim/bundle/ system works
+    set nocompatible " Must be first line
+    filetype off " required!
+    set rtp+=~/.vim/bundle/vundle/
+    call vundle#rc()
+    Bundle 'gmarik/vundle'
+" }
 
-" Config per hostname
+" Colorscheme per hostname
 let hostname = substitute(system('hostname'), '\n', '', '')
 if hostname == "msi"
-  colorscheme elflord
+  "colorscheme elflord
+  Bundle 'tomasr/molokai'
+  colorscheme molokai
 elseif hostname == "daforbb"
   colorscheme elflord
   let g:conoline_color_normal_dark = "guibg=black guifg=white gui=bold "
@@ -27,15 +37,6 @@ elseif hostname == "waldorf"
   let g:conoline_color_insert_dark = "guibg=black guifg=white gui=bold "
                            \. "ctermbg=black ctermfg=white"
 endif
-
-" Bundle setup & Support {
-" The next lines ensure that the ~/.vim/bundle/ system works
-    set nocompatible " Must be first line
-    filetype off " required!
-    set rtp+=~/.vim/bundle/vundle/
-    call vundle#rc()
-    Bundle 'gmarik/vundle'
-" }
 
 " Bundles and their configuration {
 
@@ -51,8 +52,12 @@ fu! ToggleCurcol ()
 endfunction
 map <F10> :call ToggleCurcol()<CR>
 
+"Bundle 'vim-pandoc/vim-pandoc'
+"Bundle 'vim-pandoc/vim-pandoc-syntax'
+
 
 Bundle 'tpope/vim-markdown'
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 Bundle 'wikimatze/tocdown'
 
 " Vim motions on speed!
@@ -293,30 +298,31 @@ set ignorecase " Ignore case in search patterns
 set smartcase  " Case sensitive if pattern contains upper case characters
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
+
 " Highlight matches when jumping to next
 "function! HLNext (blinktime)
 "  redraw
 "endfunction
-
+"
 " blink the line containing the match then highlight the match in red
-function! HLNext (blinktime)
-    set invcursorline
-    redraw
-    exec 'sleep ' . float2nr(a:blinktime) . 'm'
-    highlight WhiteOnRed ctermfg=white ctermbg=red
-    let [bufnum, lnum, col, off] = getpos('.')
-    let matchlen = strlen(matchstr(strpart(getline('.'),col-1),@/))
-    let target_pat = '\c\%#'.@/
-    let ring = matchadd('WhiteOnRed', target_pat, 101)
-    redraw
-    exec 'sleep ' . a:blinktime . 'm'
-    call matchdelete(ring)
-    set invcursorline
-    redraw
-endfunction
+"function! HLNext (blinktime)
+"    set invcursorline
+"    redraw
+"    exec 'sleep ' . float2nr(a:blinktime) . 'm'
+"    highlight WhiteOnRed ctermfg=white ctermbg=red
+"    let [bufnum, lnum, col, off] = getpos('.')
+"    let matchlen = strlen(matchstr(strpart(getline('.'),col-1),@/))
+"    let target_pat = '\c\%#'.@/
+"    let ring = matchadd('WhiteOnRed', target_pat, 101)
+"    redraw
+"    "exec 'sleep ' . a:blinktime . 'm'
+"    call matchdelete(ring)
+"    set invcursorline
+"    redraw
+"endfunction
 " Now, remap n/N so they call themselves, center screen & call HLNext
-nnoremap <silent> n nzz:call HLNext(300)<cr>
-nnoremap <silent> N Nzz:call HLNext(300)<cr>
+"nnoremap <silent> n nzz:call HLNext(300)<cr>
+"nnoremap <silent> N Nzz:call HLNext(300)<cr>
 "}
 
 set showmatch       " show matching brackets "(:),{:},[:]"
@@ -330,7 +336,7 @@ set wig+=.sass-cache,tmp
 " <Tab> completion, list matches, then longest common part, then all.
 set wildmode=list:longest,full
 
-
+:noremap <silent> <Leader>vs :<C-u>let @z=&so<CR>:set so=0 noscb<CR>:bo vs<CR>Ljzt:setl scb<CR><C-w>p:setl scb<CR>:let &so=@z<CR>
 
 set history=100   " how many lines of history VIM has to remember
 set nobackup      " in this age of version control, who needs it
