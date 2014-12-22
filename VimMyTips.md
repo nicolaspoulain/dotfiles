@@ -67,6 +67,7 @@
  Vu , VU , V~              | lowercase, uppercase, toggle line
  gggug                     | lowercase entire file
  gq{motion}                | format the lines that {motion} moves over
+[range]J , gJ              | Join [range] lines. Insert/remove space
 
                            | REGISTERS
  ------------------------- | ---------------------------------------------
@@ -104,9 +105,11 @@
  :digraphs  ga             | display table of utf8 chars
  CTRL-V 233                | insert é (insert mode)
  CTRL-A  , CTRL-X          | add, Substract N to the number after cursor
+ CTRL-R=5*5                | insert 25 into text
  :set paste :set nopaste   | before and after pasting from webBrowser
  :sort [n]                 | sort column 1 [numeric]
  :%!sort -t';' -k3 [-n]    | sort column 3 of coma separated [numeric]
+ :[range]hardcopy out.ps   | send [range] lines (def. all) to printer
 
                            | PLUGINS
  ------------------------- | ---------------------------------------------
@@ -183,4 +186,3 @@ cs)<p>                     | (abc) to <p>abc</p>       *SURROUND*
                   \E       | end of \U and \L
 
  vim:tw=78:ts=8:ft=help:norl:
-
