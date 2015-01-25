@@ -222,26 +222,29 @@ set number          " display line numbers
 set numberwidth=5   " nuw: width of number column
 set t_Co=256        " Colors in the terminal
 set showcmd         " display incomplete commands
-set nowrap          " Lines longer than window width will ot break
 set scrolloff=4     " keep 4 lines between current line and screen edge
 set sidescrolloff=2 " keep 2 cols between the current col screen edge
 let mapleader=','   " change map leader from \ to ,
 set list " Show invisible characters
 let &listchars = "tab:>-,trail:\u2591,extends:>,precedes:<,nbsp:\u00b7"
 
-set nowrap          " don't wrap lines (we map leader-W to toggle)
+set wrap            " wrap lines (we map leader-W to toggle)
 nmap <leader>W :set invwrap<CR>:set wrap?<CR>
 " Moving around long lines made easy if wrap is on
 map j gj
 map k gk
+
+" color the 81st column of wide lines
+highlight ColorColumn ctermbg=magenta
+call matchadd('ColorColumn', '\%81v', 100)
 
 
 " tabs and shift {
 set tabstop=2         " number of spaces that a tab renders as
 set shiftwidth=2      " number of spaces to use for autoindent
 set softtabstop=2     " number of spaces that tabs insert
+set expandtab         " uses spaces whent tab is inserted
 set smarttab          " helps with backspacing because of expandtab
-set expandtab         " uses spaces instead of tab characters
 set smartindent       " indent is automatically and smartly inserted
 set autoindent        " autoindent should be on when using 'smartindent'.
 set pastetoggle=<F12> " pastetoggle (sane indentation on pastes)
@@ -260,13 +263,9 @@ autocmd BufNewFile,BufRead *.html.twig   set syntax=html
 " folding {
 set foldmethod=syntax " fdm: fold by the indentation by default
 set foldnestmax=10    " fdn: deepest fold is 10 levels
-set nofoldenable      " nofen: don't fold by default
+"set nofoldenable      " nofen: don't fold by default
 set foldlevel=1
 " }
-
-" color the 81st column of wide lines
-highlight ColorColumn ctermbg=magenta
-call matchadd('ColorColumn', '\%81v', 100)
 
 set splitright " Puts new vsplit windows to the right of the current
 set splitbelow " Puts new split windows to the bottom of the current
@@ -336,6 +335,7 @@ set wig+=.sass-cache,tmp
 " <Tab> completion, list matches, then longest common part, then all.
 set wildmode=list:longest,full
 
+" Split into 2 continuous columns
 :noremap <silent> <Leader>vs :<C-u>let @z=&so<CR>:set so=0 noscb<CR>:bo vs<CR>Ljzt:setl scb<CR><C-w>p:setl scb<CR>:let &so=@z<CR>
 
 set history=100   " how many lines of history VIM has to remember
