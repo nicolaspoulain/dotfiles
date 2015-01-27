@@ -24,13 +24,12 @@ m{a-zA-Z}                 | set mark at cursor position (not a motion)
 '.      `.                | jump to last modification line/position
 :marks  : delmarks!       | list, delete current marks
 
-                          | COMPLETE & SNIPPETS
+                          | COMPLETE & SNIPPETS |ULTISNIPS| |SUPERTAB|
 ------------------------- | ---------------------------------------------
+TAB <CR>                  | popup completion from file and move forward
+TAB                       | snippet expand and jump to next placeholder
+CTRL-X CTRL-U             | snippets list
 CTRL-X CTRL-L             | line complete
-CTRL-N                    | next completion from file (prev. is CTRL-P)
-CTRL-X CTRL-U             | snippets show popup
-CTRL-U <CR>               | snippets navigate fwd then expand selected
-CTRL-K                    | snippets jump to next placeholder
 
                           | SPLITS
 ------------------------- | ---------------------------------------------
@@ -97,7 +96,7 @@ q                         | stop recording
 "hp , CTRL-R h            | display recording h normal/insert mode
 "hdd                      | record text as action into register h
 
-                          | DIVERS
+                          | MISC
 ------------------------- | ---------------------------------------------
 .                         | repeat last modification
 @:                        | repeat last : command (then @@)
@@ -107,29 +106,33 @@ ga                        | display hex value of char under cursor
 :dig[raphs]               | display table of utf8 chars
 CTRL-V 233                | insert é (insert mode)
 CTRL-A  , CTRL-X          | add, Substract N to the number after cursor
-CTRL-R=5*5                | insert 25 into text
+CTRL-R =5*5               | insert 25 into text
 :set paste :set nopaste   | toggle paste mode (maped to <F12>)
 :sort [n]                 | sort column 1 [numeric]
 :%!sort -t';' -k3 [-n]    | sort column 3 of coma separated [numeric]
 :[range]hardcopy > out.ps | send [range] lines (def. all) to printer
 :w!!                      | write RO files :w !sudo tee > /dev/null %
 g<C-G> , :%s/{ptnr}//gn   | count words, occurences of {ptrn}
+:h[elp] {subject}         | {subject} is cmd, i_cmd, v_cmd, c_cmd, :cmd
+:helpg[rep]               | search through all help docs
 
                           | PLUGINS
 ------------------------- | ---------------------------------------------
-<leader>gs                | |FUGITIVE| :Gstatus - un/stage, cc commt msg
-:TagbarToggle             | |TAGBAR| (maped to F8)
+:Gstatus                  | |FUGITIVE| - to un/stage, cc to commit msg
+:TagbarToggle             | |TAGBAR| (maped to <F8>)
+:NERDTreeToggle           | |NERDTREE| (maped to <F7>)
+:set cursorcolumn         | |CONOLINE| highlight cursor col/line <F10>
 
-                          | TAGS and *SURROUND*
+                          | TEXT-OBJECT and *SURROUND*
 --------------------------| ---------------------------------------------
-!/a<   |  a"  |\       at!| Around (or all) the delimitor
+!/a<   |  a"  |\       at!| Around the delimitor
  <p id= " xy " > abc </p> |    example
   \i<    |i"|/  | it|     | Inside the delimitor (t for a pair of tags)
-cst<i>                    | <p>abc</p> to <i>abc</i>  *SURROUND*
-dst                       | <p>abc</p> to abc         *SURROUND*
-viw S"                    | abc to "abc"              *SURROUND*
-cs")                      | "abc" to (abc)            *SURROUND*
-cs)<p>                    | (abc) to <p>abc</p>       *SURROUND*
+cst<i>                    | <p>abc</p> to <i>abc</i>  |SURROUND|
+dst                       | <p>abc</p> to abc            "
+viw S" or ysiw"           | abc to "abc"                 "
+cs")                      | "abc" to (abc)               "
+cs)<p>                    | (abc) to <p>abc</p>          "
 
                           | RECHERCHE, REMPLACEMENT ET SUPPRESSIONS
 --------------------------| ---------------------------------------------
