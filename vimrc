@@ -227,31 +227,6 @@ set ignorecase " Ignore case in search patterns
 set smartcase  " Case sensitive if pattern contains upper case characters
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
-
-" Highlight matches when jumping to next
-"function! HLNext (blinktime)
-"  redraw
-"endfunction
-"
-" blink the line containing the match then highlight the match in red
-"function! HLNext (blinktime)
-"    set invcursorline
-"    redraw
-"    exec 'sleep ' . float2nr(a:blinktime) . 'm'
-"    highlight WhiteOnRed ctermfg=white ctermbg=red
-"    let [bufnum, lnum, col, off] = getpos('.')
-"    let matchlen = strlen(matchstr(strpart(getline('.'),col-1),@/))
-"    let target_pat = '\c\%#'.@/
-"    let ring = matchadd('WhiteOnRed', target_pat, 101)
-"    redraw
-"    "exec 'sleep ' . a:blinktime . 'm'
-"    call matchdelete(ring)
-"    set invcursorline
-"    redraw
-"endfunction
-" Now, remap n/N so they call themselves, center screen & call HLNext
-"nnoremap <silent> n nzz:call HLNext(300)<cr>
-"nnoremap <silent> N Nzz:call HLNext(300)<cr>
 "}
 
 set showmatch       " show matching brackets "(:),{:},[:]"
