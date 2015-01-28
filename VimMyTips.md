@@ -20,7 +20,8 @@ f{char} , F{char}         | jump For next,prev {char} (Repeat ;/,)
                           | MARKS
 ------------------------- | ---------------------------------------------
 m{a-zA-Z}                 | set mark at cursor position (not a motion)
-'{a-z}  `{a-z}            | jump to the mark {a-z} in the current buffer.
+'{a-z}     `{a-z}         | jump to the mark {a-z} in the current buffer.
+'{A-Z0-9}  `{A-Z0-9}      | jump to the mark in the file where it was set
 '.      `.                | jump to last modification line/position
 :marks  : delmarks!       | list, delete current marks
 
@@ -98,8 +99,7 @@ q                         | stop recording
 
                           | MISC
 ------------------------- | ---------------------------------------------
-.                         | repeat last modification
-@:                        | repeat last : command (then @@)
+.   ,   @:                | repeat last modification/ :command (then @@)
 :history                  | list of all your commands
 /CTRL-R CTRL-W            | pull <cword> onto search/command line
 ga                        | display hex value of char under cursor
