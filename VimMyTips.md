@@ -17,12 +17,11 @@ f{char} , F{char}         | jump For next,prev {char} (Repeat ;/,)
 ,,w   ,   ,,b             | start of word forward, backward |EASYMOTION|
 %                         | matching brace {}[]()
 
-                          | MARKS
+                          | MARKS (better with |VIM-SIGNATURE|)
 ------------------------- | ---------------------------------------------
 m{a-zA-Z}                 | set mark at cursor position (not a motion)
-'{a-z}     `{a-z}         | jump to the mark {a-z} in the current buffer.
-'{A-Z0-9}  `{A-Z0-9}      | jump to the mark in the file where it was set
-'.      `.                | jump to last modification line/position
+'{a-z} '{A-Z0-9}          | jump to mark in buffer/ file where it was set
+'.     `.                 | jump to last modification line/position
 :marks  : delmarks!       | list, delete current marks
 
                           | COMPLETE & SNIPPETS |ULTISNIPS| |SUPERTAB|
