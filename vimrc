@@ -42,6 +42,7 @@ endif
 
 " Highlight the line of the cursor
 Bundle 'miyakogi/conoline.vim'
+"{
 " Highlight the column of the cursor with F10
 fu! ToggleCurcol ()
   if &cursorcolumn
@@ -51,17 +52,21 @@ fu! ToggleCurcol ()
   endif
 endfunction
 map <F10> :call ToggleCurcol()<CR>
+"}
 
 "Bundle 'vim-pandoc/vim-pandoc'
 "Bundle 'vim-pandoc/vim-pandoc-syntax'
 
-
 Bundle 'tpope/vim-markdown'
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+" ??????????????????????
 Bundle 'wikimatze/tocdown'
 
 " Vim motions on speed!
 Bundle 'Lokaltog/vim-easymotion'
+
+" place, toggle and display marks
+Bundle 'kshenoy/vim-signature'
 
 " deleting, changing, and adding surroundings
 Bundle 'tpope/vim-surround'
@@ -146,6 +151,8 @@ Bundle 'honza/vim-snippets'
 " Supertab allows you to use <Tab> for all your insert" completion needs
 Bundle 'ervandew/supertab'
     let g:SuperTabDefaultCompletionType = "<c-n>"
+"}
+
 "}
 
 set number          " display line numbers
