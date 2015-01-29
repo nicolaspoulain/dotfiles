@@ -38,12 +38,9 @@ elseif hostname == "waldorf"
                            \. "ctermbg=black ctermfg=white"
 endif
 
-" Bundles and their configuration {
-
 " Highlight the line of the cursor
 Bundle 'miyakogi/conoline.vim'
-"{
-" Highlight the column of the cursor with F10
+"{ Highlight the column of the cursor with F10
 fu! ToggleCurcol ()
   if &cursorcolumn
     set nocursorcolumn
@@ -54,13 +51,13 @@ endfunction
 map <F10> :call ToggleCurcol()<CR>
 "}
 
-"Bundle 'vim-pandoc/vim-pandoc'
-"Bundle 'vim-pandoc/vim-pandoc-syntax'
-
-Bundle 'tpope/vim-markdown'
-autocmd BufNewFile,BufReadPost *.md set filetype=markdown
-" ??????????????????????
-Bundle 'wikimatze/tocdown'
+" Configurable, flexible, intuitive text aligning --- BEFORE plasticboy
+Bundle 'godlygeek/tabular'
+" Syntax highlighting, matching rules&mappings for Markdown
+Bundle 'plasticboy/vim-markdown'
+" {
+let g:vim_markdown_folding_disabled=1
+" }
 
 " Vim motions on speed!
 Bundle 'Lokaltog/vim-easymotion'
@@ -84,13 +81,18 @@ let g:syntastic_auto_loc_list = 1     " Auto-open the error list
 " A Git wrapper so awesome, it should be illegal
 Bundle 'tpope/vim-fugitive'
 
-" Configurable, flexible, intuitive text aligning
-Bundle 'godlygeek/tabular'
-
 " Python {
 Bundle 'python.vim'
 Bundle 'pythoncomplete'
  " }
+
+" Vim plugin for intensely orgasmic commenting
+Bundle 'scrooloose/nerdcommenter'
+"{
+let NERDCommentWholeLinesInVMode=1
+let NERDRemoveExtraSpaces=1
+let NERDSpaceDelims=1
+"}
 
 " A tree explorer plugin that owns your momma!
 Bundle 'scrooloose/nerdtree'
@@ -139,20 +141,19 @@ endif
 
 " UltiSnips is the ultimate solution for snippets in Vim.
 Bundle 'SirVer/ultisnips'
-"{
 " Snippets are separated from the engine. Add this if you want them:
 Bundle 'honza/vim-snippets'
-
+"{
     let g:UltiSnipsListSnippets="<c-x><c-u>"
     let g:UltiSnipsExpandTrigger="<tab>"
     let g:UltiSnipsJumpForwardTrigger="<tab>"
     let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+"}
 
 " Supertab allows you to use <Tab> for all your insert" completion needs
 Bundle 'ervandew/supertab'
+"{
     let g:SuperTabDefaultCompletionType = "<c-n>"
-"}
-
 "}
 
 set number          " display line numbers
@@ -172,8 +173,7 @@ map j gj
 map k gk
 
 " color the 81st column of wide lines
-highlight ColorColumn ctermbg=magenta
-call matchadd('ColorColumn', '\%81v', 100)
+au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 
 
 " tabs and shift {
@@ -225,6 +225,19 @@ nnoremap <F3> :bprevious<CR>
 
 " Allow writing via sudo
 cnoremap w!! w !sudo tee > /dev/null %
+
+" Change working directory to the directory of the open buffer.
+nnoremap <leader>cd :cd %:p:h<cr>:pwd<cr>
+
+
+" Move lines up/down
+nnoremap <C-j> :m .+1<CR>==
+nnoremap <C-k> :m .-2<CR>==
+inoremap <C-j> <Esc>:m .+1<CR>==gi
+inoremap <C-k> <Esc>:m .-2<CR>==gi
+vnoremap <C-j> :m '>+1<CR>gv=gv
+vnoremap <C-k> :m '<-2<CR>gv=gv
+
 
 
 " Search {

@@ -21,7 +21,7 @@ f{char} , F{char}         | jump For next,prev {char} (Repeat ;/,)
 ------------------------- | ---------------------------------------------
 m{a-zA-Z}                 | set mark at cursor position (not a motion)
 '{a-z} '{A-Z0-9}          | jump to mark in buffer/ file where it was set
-'.     `.                 | jump to last modification line/position
+'.     `.                 | jump to last modification line/t pont position
 :marks  : delmarks!       | list, delete current marks
 
                           | COMPLETE & SNIPPETS |ULTISNIPS| |SUPERTAB|
@@ -70,6 +70,7 @@ gq{motion}                | format the lines that {motion} moves over
 range]J , gJ              | Join [range] lines. Insert/remove space
 ,W                        | toggle Wrap lines
 
+
                           | REGISTERS
 ------------------------- | ---------------------------------------------
 "{a-zA-Z0-9}              | use registr {a-zA-Z0-9} for next delete, yank
@@ -102,8 +103,7 @@ q                         | stop recording
 :history                  | list of all your commands
 /CTRL-R CTRL-W            | pull <cword> onto search/command line
 ga                        | display hex value of char under cursor
-:dig[raphs]               | display table of utf8 chars
-CTRL-V 233                | insert é (insert mode)
+CTRL-V 233                | insert é (ins mode) see :dig for utf8 chars
 CTRL-A  , CTRL-X          | add, Substract N to the number after cursor
 CTRL-R =5*5               | insert 25 into text
 :set paste :set nopaste   | toggle paste mode (maped to <F12>)
@@ -120,6 +120,7 @@ g<C-G> , :%s/{ptnr}//gn   | count words, occurences of {ptrn}
 :Gstatus                  | |FUGITIVE| - to un/stage, cc to commit msg
 :TagbarToggle             | |TAGBAR| (maped to <F8>)
 :NERDTreeToggle           | |NERDTREE| (maped to <F7>)
+,c<Space>  ,  cs          | |NERDCOMMENTER| toggle comment, sexy comment
 :set cursorcolumn         | |CONOLINE| highlight cursor col/line <F10>
 
                           | TEXT-OBJECT and *SURROUND*
