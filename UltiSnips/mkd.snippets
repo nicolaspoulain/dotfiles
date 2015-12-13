@@ -1,0 +1,22 @@
+extends markdown
+
+snippet yaml
+---
+date: ${2:`date +%Y-%m-%d__%H:%M`}
+tags: $3
+title: ${1:Meet UltiSnips}
+---
+
+# $1
+
+$0
+endsnippet
+
+snippet code
+~~~~~~~~~~~~~~ {.${1:email}}
+  ${1/(email)|(yaml)|(json)|(php)|(html)|(xml)|..*/(?1:$)(?2:#)(?3:#)(?4:<?php \/\/)(?5:<!--)(?6:<!--)/} $2${1/(html)|(xml)|..*/(?1: -->)(?2: -->)/}
+~~~~~~~~~~~~~~
+$0
+endsnippet
+
+

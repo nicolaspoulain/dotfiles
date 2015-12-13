@@ -1,0 +1,39 @@
+# PREAMBULE
+
+snippet docClass "\documentclass"
+\documentclass[${1:12pt, a4paper}]{${2:article}}
+${0}
+endsnippet
+
+snippet ams "amsmath,symb,fonts" 
+\usepackage{amsmath,amssymb,amsfonts}
+${0}
+endsnippet
+
+snippet babel "babel"
+\usepackage[${1:french}]{babel}
+${0}
+endsnippet
+
+# MATHEMATIQUES
+
+snippet frac "\frac"
+\frac{${1}}{${2}}$0
+endsnippet
+
+snippet sum "\sum"
+\sum_{${1}}^{${2}}$0
+endsnippet
+
+# PSTRICKS
+
+snippet psgrid "\psgrid"
+\psgrid[${1}](${2:0,0})(${3:xmin,ymin})(${4:xmax,ymax})
+${0}
+endsnippet
+
+snippet plot "\psplot"
+\psplot[]{${1:xmin}}{${2:xmax}}{${3:f(x)}}
+${0}
+endsnippet
+
