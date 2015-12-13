@@ -8,9 +8,9 @@ s                         | Substitute char on cursor (s is cl)
 
                           | MOTIONS
 ------------------------- | ---------------------------------------------
-..  k  CTRL-U  CTRL-B  gg | move up 1 line, 1/2 page, 1 page, 1st line
-0 bh_le w $               | moves on line
-..  j  CTRL-D  CTRL-F  G  | move down 1 line, 1/2 page, 1 page, last line
+    k  CTRL-U  CTRL-B  gg | move up  1 line, 1/2 page, 1 page, 1st line
+0 bh*le w $               | moves on line
+    j  CTRL-D  CTRL-F  G  | move dwn 1 line, 1/2 page, 1 page, last line
 NG (or :N)                | move to line N
 f{char} , F{char}         | jump For next,prev {char} (Repeat ;/,)
 /{ptrn} , ?{ptrn}         | search   next,prev {ptrn} (Repeat n/N)
@@ -26,25 +26,24 @@ m{a-zA-Z}                 | set mark at cursor position (not a motion)
 
                           | COMPLETE & SNIPPETS |ULTISNIPS| |SUPERTAB|
 ------------------------- | ---------------------------------------------
-TAB <CR>                  | popup completion from file and move forward
-TAB                       | snippet expand and jump to next placeholder
+TAB                       | snippet expand or popup completion from file
 CTRL-X CTRL-U             | snippets list
 CTRL-X CTRL-L             | line complete
 
                           | SPLITS
 ------------------------- | ---------------------------------------------
-CTRL-W =    , CTRL-W _|   | make Windows same/max height & width
-CTRL-W +-<> , CTRL-W> +++ | resize window
-CTRL-W hjkl               | focus to far left,down,up,right window
+CTRL-W s , v , q          | split/vspilt/close window
+CTRL-W =   , CTRL-W _ , | | make Windows same, max height/width
+CTRL-W +-<> , CTRL-W +++  | resize window
+CTRL-W hjkl , CTRL arrows | focus to far left,down,up,right window
 CTRL-W HJKL               | move current window to far left,down,up,right
 ,vs                       | split long file into 2 continuous windows
 
-                          | BUFFERS (better with |BUFFERLINE|)
+                          | BUFFERS (better with |MINIBUFEXPL|)
 ------------------------- | ---------------------------------------------
 :e[dit] {file}  :Sex :Vex | open {file} in new, split, vsplit window
-:ls                       | list buffers (shorter than  :buffers)
 :bw                       | close current buffer
-:sb x , vsp | bx          | move x buffer un a (v)splited window
+:sb x , vsp | bx          | move x buffer in a (v)splited window
 :sball                    | split all buffers
 :bn , :bp                 | next, previous buffer (maped to <F2> <F3>)
 
@@ -60,14 +59,14 @@ CTRL-V  jjj I foo Esc     | insert in the column of visual block
 
                           | INDENT, AUTOINDENT, FORMAT
 ------------------------- | ---------------------------------------------
->>  << , CTRL-T  CTRL-D   | shift right left, normal/insert mode Tabularize
+>>  << , CTRL-T  CTRL-D   | shift right left, norml/insrt mode Tabularize
 gg=G                      | eventually: set filetype=js + set smartindent
 == , =                    | autoIndent current line, current block
 :Tabularize /x            | aligns statements on char x |TABULARIZE|
 Vu , VU , V~              | lowercase, uppercase, toggle entire line
 gggug                     | lowercase entire file
 gq{motion}                | format the lines that {motion} moves over
-range]J , gJ              | Join [range] lines. Insert/remove space
+[range]J , gJ             | Join [range] lines (insert/remove space)
 ,W                        | toggle Wrap lines
 
 
@@ -93,7 +92,7 @@ zj , zk                   | move to the next, previous fold
 q{0-9a-zA-Z"}             | record into reg {0-9a-zA-Z"} (A-Z to append)
 q                         | stop recording
 [cnt]@{0-9a-zA-Z"}        | exec. content of reg {0-9a-z".=*+} [cnt]times
-@@                        | repeat the previous @{0-9a-z":*} [cnt] times
+[cnt]@@                   | repeat the previous @{0-9a-z":*} [cnt] times
 "hp , CTRL-R h            | display recording h normal/insert mode
 "hdd                      | record text as action into register h
 
@@ -129,7 +128,7 @@ g<C-G> , :%s/{ptnr}//gn   | count words, occurences of {ptrn}
  <p id= " xy " > abc </p> |    example
   \i<    |i"|/  | it|     | Inside the delimitor (t for a pair of tags)
 cst<i>                    | <p>abc</p> to <i>abc</i>  |SURROUND|
-dst                       | <p>abc</p> to abc            "
+dst                       | <i>abc</i> to abc            "
 viw S" or ysiw"           | abc to "abc"                 "
 cs")                      | "abc" to (abc)               "
 cs)<p>                    | (abc) to <p>abc</p>          "
@@ -143,7 +142,7 @@ cs)<p>                    | (abc) to <p>abc</p>          "
 :g/{ptrn}/#  , :v/{ptrn}/#|   idem with line numbers
 :g/^[\.]*$/d              | delete empty lines
 :[%]s/{ptrn}/{str}/[flag] | {str} replace {ptrn} on current/|all| line
-                          | flags: *c* onfirm, *g* global, *i* gnoreCase
+                          | flags: *c*onfirm, *g*lobal, *i*gnoreCase
 :& , :~                   | repeat last substitute
 g%                        | normal mode repeat last substitute
 

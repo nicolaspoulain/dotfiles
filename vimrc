@@ -20,7 +20,7 @@
 
 " Colorscheme per hostname
 let hostname = substitute(system('hostname'), '\n', '', '')
-if hostname == "msi"
+if hostname == "nico-GE60-0NC-0ND"
   "colorscheme elflord
   Bundle 'tomasr/molokai'
   colorscheme molokai
@@ -51,8 +51,15 @@ endfunction
 map <F10> :call ToggleCurcol()<CR>
 "}
 
+" help you read complex code by showing diff level of parentheses in diff color
+Bundle 'luochen1990/rainbow'
+" {
+let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
+" }
+
 " Configurable, flexible, intuitive text aligning --- BEFORE plasticboy
 Bundle 'godlygeek/tabular'
+
 " Syntax highlighting, matching rules&mappings for Markdown
 Bundle 'plasticboy/vim-markdown'
 " {
@@ -81,10 +88,17 @@ let g:syntastic_auto_loc_list = 1     " Auto-open the error list
 " A Git wrapper so awesome, it should be illegal
 Bundle 'tpope/vim-fugitive'
 
-" Python {
+" Python
+" {
 Bundle 'python.vim'
 Bundle 'pythoncomplete'
- " }
+" }
+
+" Lightweight Toolbox for LaTeX
+Bundle 'LaTeX-Box-Team/LaTeX-Box'
+" {
+let g:LatexBox_quickfix=3
+" }
 
 " Vim plugin for intensely orgasmic commenting
 Bundle 'scrooloose/nerdcommenter'
@@ -100,6 +114,22 @@ Bundle 'scrooloose/nerdtree'
     nmap <F7> :NERDTreeToggle<CR>
 "}
 
+" A plugin of NERDTree showing git status flags
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+"{
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ "Unknown"   : "?"
+    \ }
+"}
+
 " Fuzzy file, buffer, mru, tag, ... finder
 Bundle 'kien/ctrlp.vim'
 "{
@@ -112,14 +142,33 @@ Bundle 'kien/ctrlp.vim'
     let g:ctrlp_working_path_mode = 'ra'
 "}
 
+" Elegant buffer explorer - takes very little screen space
+Bundle 'fholgado/minibufexpl.vim'
+"{
+" Put new window above current or on the left for vertical split
+let g:miniBufExplBRSplit = 0
+" MiniBufExpl Colors
+hi MBENormal               guifg=#808080 guibg=fg
+hi MBEChanged              guifg=#CD5907 guibg=fg
+hi MBEVisibleNormal        guifg=#5DC2D6 guibg=fg
+hi MBEVisibleChanged       guifg=#F1266F guibg=fg
+hi MBEVisibleActiveNormal  guifg=#A6DB29 guibg=fg
+hi MBEVisibleActiveChanged guifg=#F1266F guibg=fg
+"}
+
 " Lean and mean status/tabline that's light as air
 Bundle 'bling/vim-airline'
 "{
     " the last windows always have a status-line
     set laststatus=2
     " pretty display
+    let g:airline_symbols = {}
     let g:airline_left_sep = '▶'
     let g:airline_right_sep = '◀'
+    let g:airline_symbols.linenr = '¶'
+    let g:airline_symbols.branch = '⎇'
+    let g:airline_symbols.paste = 'ρ'
+    let g:airline_symbols.whitespace = 'Ξ'
 " }
 
 " Display tags of a file ordered by scope
@@ -139,21 +188,24 @@ if executable('ctags')
 endif
 "}
 
+" A code completion engine for Vim
+Bundle 'Valloric/YouCompleteMe'
 " UltiSnips is the ultimate solution for snippets in Vim.
 Bundle 'SirVer/ultisnips'
 " Snippets are separated from the engine. Add this if you want them:
 Bundle 'honza/vim-snippets'
 "{
     let g:UltiSnipsListSnippets="<c-x><c-u>"
-    let g:UltiSnipsExpandTrigger="<tab>"
+    let g:UltiSnipsExpandTrigger="<c-k>"
     let g:UltiSnipsJumpForwardTrigger="<tab>"
     let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+    let g:UltiSnipsEditSplit="vertical"
 "}
 
 " Supertab allows you to use <Tab> for all your insert" completion needs
-Bundle 'ervandew/supertab'
+"Bundle 'ervandew/supertab'
 "{
-    let g:SuperTabDefaultCompletionType = "<c-n>"
+"    let g:SuperTabDefaultCompletionType = "<c-n>"
 "}
 
 set number          " display line numbers
@@ -163,6 +215,7 @@ set showcmd         " display incomplete commands
 set scrolloff=4     " keep 4 lines between current line and screen edge
 set sidescrolloff=2 " keep 2 cols between the current col screen edge
 let mapleader=','   " change map leader from \ to ,
+let maplocalleader=','   " change map leader from \ to ,
 set list " Show invisible characters
 let &listchars = "tab:>-,trail:\u2591,extends:>,precedes:<,nbsp:\u00b7"
 
@@ -192,8 +245,9 @@ filetype plugin on       " load the plugin files for specific file types
 filetype indent on       " load the indent file for specific file types
 let g:tex_flavor='latex' " Prevent vim from setting filetype to `plaintex`
 syntax enable            " active la coloration syntaxique
-" twig is treated as html
-autocmd BufNewFile,BufRead *.html.twig   set syntax=html
+" Enable Syntax Highlighting for special filetypes
+autocmd BufRead,BufNewFile *.twig set filetype=htmljinja
+autocmd BufRead,BufNewFile *.md   set filetype=markdown
 
 
 
@@ -206,6 +260,12 @@ set foldlevel=1
 
 set splitright " Puts new vsplit windows to the right of the current
 set splitbelow " Puts new split windows to the bottom of the current
+" Control Arrows to navigate between splits
+nmap <C-Right> <C-W><C-L>
+nmap <C-Left> <C-W><C-H>
+nmap <C-Down> <C-W><C-J>
+nmap <C-Up> <C-W><C-K>
+
 " Key repeat hack for resizing splits, i.e., <C-w>+++- vs <C-w>+<C-w>+<C-w>-
 " see: http://www.vim.org/scripts/script.php?script_id=2223
 nmap <C-w>+ <C-w>+<SID>ws
@@ -318,3 +378,8 @@ function! InitializeDirectories()
 endfunction
 call InitializeDirectories()
 " }
+
+command! -nargs=1 Silent
+      \ | execute ':silent !'.<q-args>
+      \ | execute ':redraw!'
+      \ | execute ':set autoread'
