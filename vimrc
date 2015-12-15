@@ -18,7 +18,7 @@
     Bundle 'gmarik/vundle'
 " }
 
-" Colorscheme per hostname
+" Colorscheme per hostname {
 let hostname = substitute(system('hostname'), '\n', '', '')
 if hostname == "nico-GE60-0NC-0ND"
   "colorscheme elflord
@@ -37,6 +37,7 @@ elseif hostname == "waldorf"
   let g:conoline_color_insert_dark = "guibg=black guifg=white gui=bold "
                            \. "ctermbg=black ctermfg=white"
 endif
+"}
 
 " Highlight the line of the cursor
 Bundle 'miyakogi/conoline.vim'
@@ -85,9 +86,6 @@ let g:syntastic_auto_jump = 2         " Jump to syntax errors
 let g:syntastic_auto_loc_list = 1     " Auto-open the error list
 "}
 
-" A Git wrapper so awesome, it should be illegal
-Bundle 'tpope/vim-fugitive'
-
 " Python
 " {
 Bundle 'python.vim'
@@ -106,6 +104,18 @@ Bundle 'scrooloose/nerdcommenter'
 let NERDCommentWholeLinesInVMode=1
 let NERDRemoveExtraSpaces=1
 let NERDSpaceDelims=1
+"}
+
+" Fuzzy file, buffer, mru, tag, ... finder
+Bundle 'kien/ctrlp.vim'
+"{
+    let g:ctrlp_map = '<c-p>'
+    let g:ctrlp_cmd = 'CtrlP'
+    " r - the nearest ancestor that contains a .git directory
+    " a - the directory of the current file, but only if the current working
+    " directory outside of CtrlP is not a direct ancestor of the directory of
+    " the current file.
+    let g:ctrlp_working_path_mode = 'ra'
 "}
 
 " A tree explorer plugin that owns your momma!
@@ -130,17 +140,11 @@ let g:NERDTreeIndicatorMapCustom = {
     \ }
 "}
 
-" Fuzzy file, buffer, mru, tag, ... finder
-Bundle 'kien/ctrlp.vim'
-"{
-    let g:ctrlp_map = '<c-p>'
-    let g:ctrlp_cmd = 'CtrlP'
-    " r - the nearest ancestor that contains a .git directory
-    " a - the directory of the current file, but only if the current working
-    " directory outside of CtrlP is not a direct ancestor of the directory of
-    " the current file.
-    let g:ctrlp_working_path_mode = 'ra'
-"}
+" A Git wrapper so awesome, it should be illegal
+Bundle 'tpope/vim-fugitive'
+
+" shows a git diff in the gutter (sign column) and stages/reverts hunks.
+Bundle 'airblade/vim-gitgutter'
 
 " Elegant buffer explorer - takes very little screen space
 Bundle 'fholgado/minibufexpl.vim'
