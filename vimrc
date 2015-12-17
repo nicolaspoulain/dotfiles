@@ -67,6 +67,14 @@ Bundle 'plasticboy/vim-markdown'
 let g:vim_markdown_folding_disabled=1
 " }
 
+" Maximizes and restores the current window in Vim
+Bundle 'szw/vim-maximizer'
+"{
+nnoremap <silent><F4> :MaximizerToggle<CR>
+vnoremap <silent><F4> :MaximizerToggle<CR>gv
+inoremap <silent><F4> <C-o>:MaximizerToggle<CR>
+"}
+
 " Vim motions on speed!
 Bundle 'Lokaltog/vim-easymotion'
 
@@ -145,6 +153,18 @@ Bundle 'tpope/vim-fugitive'
 
 " shows a git diff in the gutter (sign column) and stages/reverts hunks.
 Bundle 'airblade/vim-gitgutter'
+
+" extends " and @ in normal mode and <CTRL-R> in insert mode so you can see
+" the contents of the registers.
+Bundle 'junegunn/vim-peekaboo'
+"{
+" Default peekaboo window
+let g:peekaboo_window = 'vertical botright 30new'
+" Delay opening of peekaboo window (in ms. default: 0)
+let g:peekaboo_delay = 750
+" Compact display; do not display the names of the register groups
+let g:peekaboo_compact = 1
+"}
 
 " Elegant buffer explorer - takes very little screen space
 Bundle 'fholgado/minibufexpl.vim'

@@ -38,6 +38,7 @@ CTRL-W +-<> , CTRL-W +++  | resize window
 CTRL-W hjkl , CTRL arrows | focus to far left,down,up,right window
 CTRL-W HJKL               | move current window to far left,down,up,right
 ,vs                       | split long file into 2 continuous windows
+:MaximizerToggle          | maximize split and restore (maped to <F4>)
 
                           | BUFFERS (better with |MINIBUFEXPL|)
 ------------------------- | ---------------------------------------------
@@ -124,9 +125,9 @@ g<C-G> , :%s/{ptnr}//gn   | count words, occurences of {ptrn}
 
                           | TEXT-OBJECT and *SURROUND*
 --------------------------| ---------------------------------------------
-!/a<   |  a"  |\       at!| Around the delimitor
+╔╓a<   ┌  a"  ┐╖       at╗| Around the delimitor
  <p id= " xy " > abc </p> |    example
-  \i<    |i"|/  | it|     | Inside the delimitor (t for a pair of tags)
+  ╚i<    └i"┘ ╝ └ it┘     | Inside the delimitor (t for a pair of tags)
 cst<i>                    | <p>abc</p> to <i>abc</i>  |SURROUND|
 dst                       | <i>abc</i> to abc            "
 viw S" or ysiw"           | abc to "abc"                 "
