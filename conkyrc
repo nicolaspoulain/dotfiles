@@ -13,8 +13,8 @@ xftalpha 1
 update_interval 2.0
 total_run_times 0
 own_window yes
+own_window_type normal
 own_window_transparent yes
-own_window_type desktop
 #own_window_argb_visual yes
 own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
 double_buffer yes
@@ -52,8 +52,8 @@ swap $alignc $swap / $swapmax $alignr $swapperc%
 ${swapbar}
 / $alignc ${fs_used /} / ${fs_size /} $alignr ${fs_free_perc /}%
 ${fs_bar /}
-/home $alignc ${fs_used /home} / ${fs_size /home} $alignr ${fs_free_perc /home}%
-${fs_bar /home}
+#/home $alignc ${fs_used /home} / ${fs_size /home} $alignr ${fs_free_perc /home}%
+#${fs_bar /home}
 
 CPU:$alignr${cpu cpu0}% $processes processes ($running_processes running)
 ${cpugraph 40,240 000000 656667}

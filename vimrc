@@ -20,7 +20,7 @@
 
 " Colorscheme per hostname {
 let hostname = substitute(system('hostname'), '\n', '', '')
-if hostname == "nico-GE60-0NC-0ND"
+if hostname == "nico-ThinkPad-X250"
   "colorscheme elflord
   Bundle 'tomasr/molokai'
   colorscheme molokai
