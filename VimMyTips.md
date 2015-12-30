@@ -16,13 +16,15 @@ f{char} , F{char}         | jump For next,prev {char} (Repeat ;/,)
 /{ptrn} , ?{ptrn}         | search   next,prev {ptrn} (Repeat n/N)
 ,,w   ,   ,,b             | start of word forward, backward |EASYMOTION|
 %                         | matching brace {}[]()
-
-                          | MARKS (better with |VIM-SIGNATURE|)
+|
+                          | RECORDING
 ------------------------- | ---------------------------------------------
-m{a-zA-Z}                 | set mark at cursor position (not a motion)
-'{a-z} '{A-Z0-9}          | jump to mark in buffer/ file where it was set
-'.     `.                 | jump to last modification line/t pont position
-:marks  : delmarks!       | list, delete current marks
+q{0-9a-zA-Z"}             | record into reg {0-9a-zA-Z"} (A-Z to append)
+q                         | stop recording
+[cnt]@{0-9a-zA-Z"}        | exec. content of reg {0-9a-z".=*+} [cnt]times
+[cnt]@@                   | repeat the previous @{0-9a-z":*} [cnt] times
+"hp , CTRL-R h            | display recording h normal/insert mode
+"hdd                      | record text as action into register h
 
                           | COMPLETE & SNIPPETS |ULTISNIPS| |SUPERTAB|
 ------------------------- | ---------------------------------------------
@@ -30,7 +32,7 @@ TAB                       | snippet expand or popup completion from file
 CTRL-X CTRL-U             | snippets list
 CTRL-X CTRL-L             | line complete
 
-                          | SPLITS
+                          | SPLITS |VIM-MAXIMIZER|
 ------------------------- | ---------------------------------------------
 CTRL-W s , v , q          | split/vspilt/close window
 CTRL-W =   , CTRL-W _ , | | make Windows same, max height/width
@@ -43,9 +45,8 @@ CTRL-W HJKL               | move current window to far left,down,up,right
                           | BUFFERS (better with |MINIBUFEXPL|)
 ------------------------- | ---------------------------------------------
 :e[dit] {file}  :Sex :Vex | open {file} in new, split, vsplit window
-:bw                       | close current buffer
 :sb x , vsp | bx          | move x buffer in a (v)splited window
-:sball                    | split all buffers
+:sball , :bw              | split all buffers , close current buffer
 :bn , :bp                 | next, previous buffer (maped to <F2> <F3>)
 
                           | VISUAL MODE ie TEXT BLOCKS
@@ -63,7 +64,6 @@ CTRL-V  jjj I foo Esc     | insert in the column of visual block
 >>  << , CTRL-T  CTRL-D   | shift right left, norml/insrt mode Tabularize
 gg=G                      | eventually: set filetype=js + set smartindent
 == , =                    | autoIndent current line, current block
-:Tabularize /x            | aligns statements on char x |TABULARIZE|
 Vu , VU , V~              | lowercase, uppercase, toggle entire line
 gggug                     | lowercase entire file
 gq{motion}                | format the lines that {motion} moves over
@@ -85,17 +85,13 @@ gq{motion}                | format the lines that {motion} moves over
 zR , zM                   | open/close ALL folds (zr, zm not recursive)
 zA                        | toggle state of fold (za is not recursive)
 zf{motion} , {visual}zf   | creates a fold (e.g zf% fold matching pair)
-zj , zk                   | move to the next, previous fold
-[z , ]z                   | move to start/ end of open fold
 
-                          | RECORDING
+                          | MARKS (better with |VIM-SIGNATURE|)
 ------------------------- | ---------------------------------------------
-q{0-9a-zA-Z"}             | record into reg {0-9a-zA-Z"} (A-Z to append)
-q                         | stop recording
-[cnt]@{0-9a-zA-Z"}        | exec. content of reg {0-9a-z".=*+} [cnt]times
-[cnt]@@                   | repeat the previous @{0-9a-z":*} [cnt] times
-"hp , CTRL-R h            | display recording h normal/insert mode
-"hdd                      | record text as action into register h
+m{a-zA-Z}                 | set mark at cursor position (not a motion)
+'{a-z} '{A-Z0-9}          | jump to mark in buffer/ file where it was set
+'.     `.                 | jump to last modification line/t pont position
+:marks  : delmarks!       | list, delete current marks
 
                           | MISC
 ------------------------- | ---------------------------------------------
@@ -122,6 +118,8 @@ g<C-G> , :%s/{ptnr}//gn   | count words, occurences of {ptrn}
 :NERDTreeToggle           | |NERDTREE| (maped to <F7>)
 ,c<Space>  ,  cs          | |NERDCOMMENTER| toggle comment, sexy comment
 :set cursorcolumn         | |CONOLINE| highlight cursor col/line <F10>
+:Tabularize /x            | |TABULARIZE| aligns statements on char x 
+:TableModeToggle          | |VIM-TABLE-MODE| | autoAlign || line
 
                           | TEXT-OBJECT and *SURROUND*
 --------------------------| ---------------------------------------------

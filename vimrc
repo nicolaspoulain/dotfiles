@@ -61,11 +61,18 @@ let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 " Configurable, flexible, intuitive text aligning --- BEFORE plasticboy
 Bundle 'godlygeek/tabular'
 
+" Automatic table creator & formatter to create neat tables as you type.
+Plugin 'dhruvasagar/vim-table-mode'
+
 " Syntax highlighting, matching rules&mappings for Markdown
 Bundle 'plasticboy/vim-markdown'
 " {
 let g:vim_markdown_folding_disabled=1
 " }
+
+" Provides facilities to integrate Vim with pandoc
+Plugin 'vim-pandoc/vim-pandoc'
+Plugin 'vim-pandoc/vim-pandoc-syntax'
 
 " Maximizes and restores the current window in Vim
 Bundle 'szw/vim-maximizer'
@@ -271,9 +278,7 @@ let g:tex_flavor='latex' " Prevent vim from setting filetype to `plaintex`
 syntax enable            " active la coloration syntaxique
 " Enable Syntax Highlighting for special filetypes
 autocmd BufRead,BufNewFile *.twig set filetype=htmljinja
-autocmd BufRead,BufNewFile *.md   set filetype=markdown
-
-
+"autocmd BufRead,BufNewFile *.md   set filetype=markdown
 
 " folding {
 set foldmethod=syntax " fdm: fold by the indentation by default
