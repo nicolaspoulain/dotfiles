@@ -65,19 +65,11 @@ ${top name 5} $alignr ${top pid 5} ${top cpu 5}
 
 R A C C O U R C I S    C L A V I E R
 ${hr}
-Alt+F2$alignr Exécuter
-Alt+F3$alignr Menu alternatif
-Super+Space$alignr Menu
-Super+Tab$alignr Menu client
-Super+t$alignr Terminal
-Super+f$alignr Gestionnaire de fichiers
-Super+e$alignr Éditeur de texte
-Super+m$alignr Lecteur multimédia
-Super+w$alignr Navigateur internet
-Super+l$alignr Verrouiller
-Super+v$alignr Contrôle du volume
-Super+x$alignr Quitter
-Alt+a / Alt+u$alignr  Pytyle on/off
-Alt+c$alignr   Cycle des fenêtres
-Alt+l / Alt+h$alignr  Taille fenêtre maîtresse
-
+Alt+X         $alignr Lancer commande
+Super+X       $alignr Terminal
+Super+E       $alignr Gestionnaire de fichiers
+Super+W       $alignr Navigateur internet
+Super+L       $alignr Verrouiller
+Ctrl+Alt+Suppr$alignr Halt
+Alt+Impr      $alignr Fenêtre
+Maj+Impr      $alignr Zone
