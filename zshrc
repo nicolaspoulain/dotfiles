@@ -1,3 +1,13 @@
+# COMMANDES D'INSTALLATION
+# ------------------------
+# git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
+# sudo apt-install fonts-powerline
+# git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
+# wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/Hack.zip
+# mkdir hack && unzip Hack.zip -d hack
+# sudo mv hack /usr/share/fonts/truetype
+# fc-cache -f -v
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
